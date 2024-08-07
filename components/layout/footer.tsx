@@ -1,8 +1,6 @@
 import * as React from "react"
-import dynamicFn from "next/dynamic"
 import NextLink from "next/link"
 
-import Image from "@/components/image"
 import LanguageSwitcher from "@/components/language/language-switcher"
 import Logo from "@/components/logo"
 import ThemeSwitcher from "@/components/theme/theme-switcher"
@@ -12,16 +10,6 @@ import env from "@/env.mjs"
 import { getI18n } from "@/lib/locales/server"
 import { api } from "@/lib/trpc/server"
 import { cn } from "@/lib/utils"
-
-const FooterDescription = dynamicFn(
-  async () => {
-    const FooterDescription = await import("./footer-description")
-    return FooterDescription
-  },
-  {
-    ssr: false,
-  },
-)
 
 interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -39,9 +27,6 @@ const Footer: React.FunctionComponent<FooterProps> = async (props) => {
     settingValues = { ...parsedSetting }
   }
 
-  const footerTagline = settingValues?.footer_tagline
-  const footerDescription = settingValues?.footer_description
-  const footerFAQ = settingValues?.footer_faq
   const siteTitle = settingValues?.site_title ?? env.NEXT_PUBLIC_SITE_TITLE
   const siteTagline =
     settingValues?.site_tagline ?? env.NEXT_PUBLIC_SITE_TAGLINE
@@ -50,11 +35,6 @@ const Footer: React.FunctionComponent<FooterProps> = async (props) => {
 
   return (
     <footer>
-      <FooterDescription
-        footerTagline={footerTagline}
-        footerDescription={footerDescription}
-        footerFAQ={footerFAQ}
-      />
       <div
         className={cn(
           "sticky top-[100vh] z-40 mt-auto bg-muted px-4 pb-[100px] pt-4 lg:px-24 lg:pb-12 lg:pt-12 2xl:px-56",
@@ -72,31 +52,6 @@ const Footer: React.FunctionComponent<FooterProps> = async (props) => {
             <ThemeSwitcher />
           </div>
           <div className="flex flex-col space-y-4 lg:space-y-12">
-            <div className="space-y-2">
-              <h2 className="text-base lg:text-lg">{t("safe_payment")}</h2>
-              <div className="flex flex-row gap-2">
-                <Image
-                  src="/payment/gopay.webp"
-                  className="!relative !h-3 !w-auto lg:!h-5"
-                  alt="Dana"
-                />
-                <Image
-                  src="/payment/dana.webp"
-                  className="!relative !h-3 !w-auto lg:!h-5"
-                  alt="Dana"
-                />
-                <Image
-                  src="/payment/shopeepay.webp"
-                  className="!relative !h-3 !w-auto lg:!h-5"
-                  alt="Dana"
-                />
-                <Image
-                  src="/payment/ovo.webp"
-                  className="!relative !h-3 !w-auto lg:!h-5"
-                  alt="Dana"
-                />
-              </div>
-            </div>
             <div className="flex flex-col space-y-4 lg:flex-row lg:space-x-12 lg:space-y-0">
               <div className="flex flex-col space-y-2 lg:space-y-3">
                 <h2 className="text-base">{t("contact_us")}</h2>

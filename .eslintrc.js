@@ -36,6 +36,7 @@ const config = {
     "no-prototype-builtins": "off",
     "no-unsafe-optional-chaining": "off",
     "import/consistent-type-specifier-style": "off",
+    "@typescript-eslint/no-empty-object-type": "off",
     "@typescript-eslint/consistent-type-imports": [
       "warn",
       { prefer: "type-imports", fixStyle: "separate-type-imports" },
