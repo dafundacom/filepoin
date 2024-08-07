@@ -33,7 +33,7 @@ export const DOWNLOAD_SCHEMA_JSON = [
   "GameApp",
 ] as const
 
-export const downloadSchema = z.enum(DOWNLOAD_SCHEMA_JSON)
+export const downloadSchemaJson = z.enum(DOWNLOAD_SCHEMA_JSON)
 
 const downloadInput = {
   title: z
@@ -178,6 +178,7 @@ export const updateDownloadSchema = z.object({
 })
 
 export type DownloadType = z.infer<typeof downloadType>
+export type DownloadSchemaJson = z.infer<typeof downloadSchemaJson>
 export type CreateDownload = z.infer<typeof createDownloadSchema>
 export type UpdateDownload = z.infer<typeof updateDownloadSchema>
 export type TranslateDownload = z.infer<typeof translateDownloadSchema>

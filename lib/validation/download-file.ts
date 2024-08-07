@@ -1,7 +1,5 @@
 import { z } from "zod"
 
-import { STATUS_TYPE } from "./status"
-
 const downloadFileInput = {
   title: z
     .string({
@@ -9,20 +7,6 @@ const downloadFileInput = {
       invalid_type_error: "Title must be a string",
     })
     .min(2),
-  metaTitle: z
-    .string({
-      invalid_type_error: "Meta Title must be a string",
-    })
-    .optional(),
-  metaDescription: z
-    .string({
-      invalid_type_error: "Meta Description must be a string",
-    })
-    .optional(),
-  featuredImageId: z.string({
-    required_error: "Featured Image is required",
-    invalid_type_error: "Featured Image must be a string",
-  }),
   version: z
     .string({
       required_error: "Version is required",
@@ -41,30 +25,6 @@ const downloadFileInput = {
       invalid_type_error: "File Size must be a string",
     })
     .min(1),
-  currency: z
-    .string({
-      required_error: "Currency is required",
-      invalid_type_error: "Currency must be a string",
-    })
-    .min(1),
-  price: z
-    .string({
-      required_error: "Price is required",
-      invalid_type_error: "Price must be a string",
-    })
-    .min(1),
-  status: z
-    .enum(STATUS_TYPE, {
-      invalid_type_error:
-        "only published, draft, rejected and in_review are accepted",
-    })
-    .optional(),
-  authors: z
-    .string({
-      required_error: "Author Id is required",
-      invalid_type_error: "Author Id must be a string",
-    })
-    .array(),
 }
 
 const updateDownloadFileInput = {

@@ -136,7 +136,7 @@ const DashboardAddAuthors: React.FunctionComponent<DashboardAddAuthorsProps> = (
     <div className="my-2 flex max-w-xl flex-col space-y-2">
       <FormLabel>{t("authors")}</FormLabel>
       <div className="rounded-md border border-muted/30 bg-muted/100">
-        <div className="parent-focus flex max-w-[300px] flex-row flex-wrap items-center justify-start gap-2 p-2">
+        <div className="flex max-w-[300px] flex-row flex-wrap items-center justify-start gap-2 p-2">
           {selectedAuthors.length > 0 &&
             selectedAuthors.map((author) => {
               return (

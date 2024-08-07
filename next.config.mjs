@@ -40,15 +40,7 @@ const config = {
       },
       {
         protocol: "https",
-        hostname: "**.tokodaim.com",
-      },
-      {
-        protocol: "https",
-        hostname: "*.teknodaim.com",
-      },
-      {
-        protocol: "https",
-        hostname: "*.tripay.co.id",
+        hostname: "*.filepoin.com",
       },
     ],
   },

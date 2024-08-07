@@ -453,7 +453,6 @@ export const downloadRouter = createTRPCRouter({
     .input(
       z.object({
         language: z.enum(LANGUAGE_TYPE),
-        type: z.enum(DOWNLOAD_TYPE).nullable(),
         page: z.number(),
         perPage: z.number(),
       }),
