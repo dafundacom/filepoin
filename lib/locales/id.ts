@@ -1,6 +1,7 @@
 export default {
   "ad.add": "Tambah Iklan Baru",
   "ad.all": "Semua Iklan",
+  "ad.content_adsense_placeholder": "Masukan Adsense Ad Slot",
   "ad.content_required": "Konten iklan harus diisi",
   "ad.content_script_placeholder": "Masukan Skrip Iklan",
   "ad.create_failed": "Gagal membuat iklan! Coba lagi nanti",

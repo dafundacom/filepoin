@@ -1,6 +1,7 @@
 export default {
   "ad.add": "Add New Add",
   "ad.all": "All Ads",
+  "ad.content_adsense_placeholder": "Enter Adsense Ad Slot",
   "ad.content_required": "Ad content is required",
   "ad.content_script_placeholder": "Enter Ad Script",
   "ad.create_failed": "Failed to create ad! Please try again later",
