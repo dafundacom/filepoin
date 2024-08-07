@@ -176,6 +176,18 @@ export default function EditAdForm(props: EditAdFormProps) {
                       <SelectItem value="single_article_pop_up">
                         Single Article (Pop Up)
                       </SelectItem>
+                      <SelectItem value="single_download_above_content">
+                        Single Download (Above Content)
+                      </SelectItem>
+                      <SelectItem value="single_download_middle_content">
+                        Single Download (Middle Content)
+                      </SelectItem>
+                      <SelectItem value="single_download_below_content">
+                        Single Download (Below Content)
+                      </SelectItem>
+                      <SelectItem value="single_download_pop_up">
+                        Single Download (Pop Up)
+                      </SelectItem>
                       <SelectItem value="article_below_header_amp">
                         Article (AMP Below Header)
                       </SelectItem>
