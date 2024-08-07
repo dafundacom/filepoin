@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@keyframes fade-up-animation {
+  0% {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 100;
+  }
+}
+
+.fade-up-element {
+  transform: translateY(40px);
+  opacity: 0;
+  animation: fade-up-animation 500ms ease forwards;
+}
+
+/* Editor */
+.text-editor-extended > .ProseMirror {
+  @apply min-h-screen min-w-0 items-center space-y-2 px-3 py-2 text-base text-foreground outline-none;
+}
+
+.text-editor > div[contenteditable="true"] {
+  @apply w-full break-all rounded-md border border-input bg-background px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.text-editor > .ProseMirror > p.is-editor-empty:first-child::before,
+.text-editor-extended div > p.is-editor-empty:first-child::before {
+  @apply pointer-events-none float-left h-0 text-foreground content-[attr(data-placeholder)];
+}
+
+.text-editor div {
+  @apply text-foreground outline-none;
+}
+
+.text-editor div p {
+  @apply text-sm;
+}
+
+.tippybox {
+  @apply !max-w-5xl;
+}
+
+/* Content */
+.article-content,
+.top-up-content,
+.tiptap {
+  @apply space-y-2 break-words;
+}
+
+.top-up-content {
+  @apply space-y-2 break-words text-sm lg:text-base;
+}
+
+.article-content p,
+.tiptap p {
+  @apply text-base md:text-lg;
+}
+
+.article-content a,
+.top-up-content a,
+.tiptap a {
+  @apply font-semibold text-sky-900 no-underline duration-200 hover:text-sky-950 hover:underline;
+}
+
+.article-content ul li,
+.top-up-content ul li,
+.tiptap ul li {
+  @apply ml-12 list-disc;
+}
+
+.article-content ol li,
+.top-up-content ol li,
+.tiptap ol li {
+  @apply ml-12 list-decimal;
+}
+
+.article-content blockquote,
+.top-up-content blockquote,
+.tiptap blockquote {
+  @apply my-4 rounded-sm border-l-4 border-border p-4 italic;
+}
+
+.article-content img,
+.top-up-content img,
+.tiptap img {
+  @apply !relative !h-auto !w-auto max-w-full rounded-md object-cover;
+}
+
+.article-content pre,
+.top-up-content pre,
+.tiptap pre {
+  @apply rounded-lg bg-black px-3 py-2 font-mono text-white;
+}
+
+.article-content code,
+.top-up-content code,
+.tiptap code {
+  @apply bg-[none] p-0 text-xs text-[inherit];
+}
+
+.article-content table th,
+.top-up-content table th,
+.tiptap table th {
+  @apply bg-[#f1f3f5] text-left font-bold;
+}
+
+.article-content table td,
+.article-content table th,
+.top-up-content table td,
+.top-up-content table th,
+.tiptap table td,
+.tiptap table th {
+  @apply relative box-border min-w-[1em] border-2 border-[#ced4da] px-[5px] py-[3px] align-top;
+}
+
+.article-content table .selectedCell:after,
+.top-up-content table .selectedCell:after {
+  @apply pointer-events-none absolute bottom-0 left-0 right-0 top-0 z-20 bg-[#c8c8ff66];
+}
+
+.article-content table .column-resize-handle,
+.top-up-content table .column-resize-handle {
+  @apply pointer-events-none absolute bottom-[-2px] right-[-2px] top-0 w-1 bg-[#adf];
+}
+
+.article-content table,
+.top-up-content table,
+.tiptap table {
+  @apply m-0 w-full max-w-[calc(100%-10px)] table-fixed border-collapse overflow-hidden;
+}
+
+.article-content iframe,
+.top-up-content iframe {
+  @apply relative mx-auto my-0 aspect-video h-auto w-full rounded-md align-baseline;
+}
+
+.tiptap iframe {
+  @apply aspect-video h-auto max-h-[320px] w-full max-w-[640px] rounded-md align-baseline;
+}
+
+.tiptap .has-focus:not(p, h1, h2, h3, h4, h5) {
+  @apply rounded-sm shadow-[0_0_0_3px_#68cef8];
+}
+
+/* Footer */
+
+.footer-content h2 {
+  @apply text-sm lg:text-base;
+}
+
+.footer-content p {
+  @apply text-xs lg:text-sm;
+}
+
+/* Youtube Embed */
+.yt-lite {
+  @apply aspect-video h-auto w-full rounded-lg shadow-lg;
+}
