@@ -214,6 +214,9 @@ export default function EditAdForm(props: EditAdFormProps) {
                       <SelectItem value="article_below_header">
                         Article (Below Header)
                       </SelectItem>
+                      <SelectItem value="download_below_header">
+                        Download (Below Header)
+                      </SelectItem>
                       <SelectItem value="topic_below_header">
                         Topic (Below Header)
                       </SelectItem>

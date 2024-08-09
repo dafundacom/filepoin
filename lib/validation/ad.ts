@@ -3,6 +3,7 @@ import { z } from "zod"
 export const AD_POSITION = [
   "home_below_header",
   "article_below_header",
+  "download_below_header",
   "topic_below_header",
   "single_article_above_content",
   "single_article_middle_content",
