@@ -26,7 +26,7 @@ import {
   translateDownloadSchema,
   updateDownloadSchema,
 } from "@/lib/validation/download"
-import { LANGUAGE_TYPE } from "@/lib/validation/language"
+import { LANGUAGE_TYPE, languageType } from "@/lib/validation/language"
 
 export const downloadRouter = createTRPCRouter({
   downloadTranslationById: publicProcedure
@@ -441,6 +441,65 @@ export const downloadRouter = createTRPCRouter({
         return data
       } catch (error) {
         console.log("Error:", error)
+        if (error instanceof TRPCError) {
+          throw error
+        } else {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "An internal error occurred",
+          })
+        }
+      }
+    }),
+  byTopicIdInfinite: publicProcedure
+    .input(
+      z.object({
+        topicId: z.string(),
+        language: languageType,
+        limit: z.number().min(1).max(100).nullable(),
+        cursor: z.date().optional().nullable(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        const limit = input.limit ?? 50
+
+        const downloads = await ctx.db.query.downloads.findMany({
+          where: (downloads, { eq, and, lt }) =>
+            and(
+              eq(downloads.language, input.language),
+              eq(downloads.status, "published"),
+              input.cursor
+                ? lt(downloads.updatedAt, new Date(input.cursor))
+                : undefined,
+            ),
+          limit: limit + 1,
+          orderBy: (downloads, { desc }) => [desc(downloads.updatedAt)],
+          with: {
+            featuredImage: true,
+            topics: true,
+          },
+        })
+
+        const data = downloads.filter((download) =>
+          download.topics.some((topic) => topic.topicId === input.topicId),
+        )
+
+        let nextCursor: Date | undefined = undefined
+
+        if (data.length > limit) {
+          const nextItem = data.pop()
+          if (nextItem?.updatedAt) {
+            nextCursor = nextItem.updatedAt
+          }
+        }
+
+        return {
+          downloads: data,
+          nextCursor,
+        }
+      } catch (error) {
+        console.error("Error:", error)
         if (error instanceof TRPCError) {
           throw error
         } else {
