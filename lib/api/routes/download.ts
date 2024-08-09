@@ -50,6 +50,8 @@ export const downloadRouter = createTRPCRouter({
                   schemaType: true,
                   slug: true,
                   type: true,
+                  price: true,
+                  currency: true,
                 },
                 with: {
                   featuredImage: {
