@@ -1,0 +1,1 @@
+ALTER TABLE "download_files" ALTER COLUMN "version_slug" SET DEFAULT 'asu';

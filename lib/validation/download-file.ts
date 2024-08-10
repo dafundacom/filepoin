@@ -33,14 +33,6 @@ const updateDownloadFileInput = {
     required_error: "Id is required",
     invalid_type_error: "Id must be a string",
   }),
-  slug: z
-    .string({
-      required_error: "Slug is required",
-      invalid_type_error: "Slug must be a string",
-    })
-    .regex(new RegExp(/^[a-zA-Z0-9_-]*$/), {
-      message: "Slug should be character a-z, A-Z, number, - and _",
-    }),
 }
 
 export const createDownloadFileSchema = z.object({

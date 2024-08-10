@@ -14,6 +14,7 @@ export const downloadFiles = pgTable("download_files", {
   id: text("id").primaryKey(),
   title: text("title").unique().notNull(),
   version: text("version").notNull(),
+  versionSlug: text("version_slug").notNull(),
   downloadLink: text("download_link").notNull(),
   fileSize: text("file_size").notNull(),
   views: integer("views").notNull().default(0),

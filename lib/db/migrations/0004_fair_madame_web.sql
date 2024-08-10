@@ -1,0 +1,1 @@
+ALTER TABLE "download_files" ADD COLUMN "version_slug" text NOT NULL;

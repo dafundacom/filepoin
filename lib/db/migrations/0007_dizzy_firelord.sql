@@ -1,0 +1,1 @@
+ALTER TABLE "download_files" DROP CONSTRAINT "download_files_version_slug_unique";

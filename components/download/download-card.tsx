@@ -48,7 +48,7 @@ const DownloadCard: React.FunctionComponent<DownloadCardProps> = (props) => {
     <div
       key={slug}
       className={cn(
-        "inline-block flex-col overflow-hidden rounded-lg shadow-lg",
+        "inline-block max-h-[250px] w-[200px] flex-col overflow-hidden rounded-lg shadow-lg",
         className,
       )}
     >
@@ -72,13 +72,10 @@ const DownloadCard: React.FunctionComponent<DownloadCardProps> = (props) => {
         </Button>
       </div>
       <NextLink aria-label={title} href={`/download/${type}/${slug}`}>
-        <h3 className="mt-3 line-clamp-4 whitespace-normal px-3 text-base">
+        <h3 className="my-3 line-clamp-4 whitespace-normal p-3 text-base">
           {title}
         </h3>
       </NextLink>
-      <div className="mb-3 mt-6 flex justify-between px-3">
-        <p className="inline-block whitespace-normal">{download.price}</p>
-      </div>
     </div>
   )
 }

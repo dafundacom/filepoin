@@ -1,0 +1,1 @@
+ALTER TYPE "ad_position" ADD VALUE 'downloading_page';

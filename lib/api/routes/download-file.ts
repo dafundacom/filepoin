@@ -13,7 +13,7 @@ import {
   downloadFiles,
   downloads,
 } from "@/lib/db/schema"
-import { cuid } from "@/lib/utils"
+import { cuid, slugify } from "@/lib/utils"
 import {
   createDownloadFileSchema,
   updateDownloadFileSchema,
@@ -141,6 +141,42 @@ export const downloadFileRouter = createTRPCRouter({
         }
       }
     }),
+  byDownloadIdAndVersionSlug: publicProcedure
+    .input(
+      z.object({
+        downloadId: z.string(),
+        versionSlug: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        const downloadFiles = await ctx.db.query.downloadFiles.findMany({
+          where: (downloadFile, { eq }) =>
+            eq(downloadFile.versionSlug, input.versionSlug),
+          with: {
+            downloads: true,
+          },
+        })
+
+        const data = downloadFiles.filter((downloadFile) =>
+          downloadFile.downloads.some(
+            (download) => download.downloadId === input.downloadId,
+          ),
+        )
+
+        return data[0]
+      } catch (error) {
+        console.error("Error:", error)
+        if (error instanceof TRPCError) {
+          throw error
+        } else {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "An internal error occurred",
+          })
+        }
+      }
+    }),
   count: publicProcedure.query(async ({ ctx }) => {
     try {
       const data = await ctx.db.select({ value: count() }).from(downloadFiles)
@@ -189,11 +225,14 @@ export const downloadFileRouter = createTRPCRouter({
       try {
         const downloadFileId = cuid()
 
+        const versionSlug = slugify(input.version)
+
         const data = await ctx.db
           .insert(downloadFiles)
           .values({
             ...input,
             id: downloadFileId,
+            versionSlug: versionSlug,
           })
           .returning()
 

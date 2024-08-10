@@ -4,16 +4,11 @@ import * as React from "react"
 
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
-import type {
-  SelectDownload,
-  SelectDownloadFile,
-  SelectMedia,
-} from "@/lib/db/schema"
+import type { SelectDownload, SelectMedia } from "@/lib/db/schema"
 import DownloadCard from "./download-card"
 
 type DownloadDataProps = Partial<SelectDownload> & {
   featuredImage: Pick<SelectMedia, "url">
-  downloadFiles?: Partial<SelectDownloadFile>[]
 }
 
 interface DownloadListProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -103,10 +98,7 @@ const DownloadList: React.FunctionComponent<DownloadListProps> = (props) => {
         {downloads?.map((download) => {
           return (
             <React.Fragment key={download.id}>
-              <DownloadCard
-                className="h-[280px] w-[200px]"
-                download={download}
-              />
+              <DownloadCard download={download} />
             </React.Fragment>
           )
         })}

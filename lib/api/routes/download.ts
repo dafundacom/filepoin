@@ -71,6 +71,7 @@ export const downloadRouter = createTRPCRouter({
             id: downloadFiles.id,
             title: downloadFiles.title,
             version: downloadFiles.version,
+            versionSlug: downloadFiles.versionSlug,
           })
           .from(downloadDownloadFiles)
           .leftJoin(

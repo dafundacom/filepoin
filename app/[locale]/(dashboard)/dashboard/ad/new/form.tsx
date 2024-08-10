@@ -229,6 +229,9 @@ export default function CreateAdForm() {
                       <SelectItem value="single_download_pop_up">
                         Single Download (Pop Up)
                       </SelectItem>
+                      <SelectItem value="downloading_page">
+                        Downloading Page
+                      </SelectItem>
                       <SelectItem value="article_below_header_amp">
                         Article (AMP Below Header)
                       </SelectItem>

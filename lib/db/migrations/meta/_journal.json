@@ -29,6 +29,41 @@
       "when": 1723186958258,
       "tag": "0003_clever_sabra",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1723273881857,
+      "tag": "0004_fair_madame_web",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1723274567154,
+      "tag": "0005_lowly_killer_shrike",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1723274591596,
+      "tag": "0006_funny_franklin_richards",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1723274643435,
+      "tag": "0007_dizzy_firelord",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1723276049647,
+      "tag": "0008_wealthy_firestar",
+      "breakpoints": true
     }
   ]
 }

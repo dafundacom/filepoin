@@ -13,6 +13,7 @@ export const AD_POSITION = [
   "single_download_middle_content",
   "single_download_below_content",
   "single_download_pop_up",
+  "downloading_page",
   "article_below_header_amp",
   "single_article_above_content_amp",
   "single_article_middle_content_amp",
