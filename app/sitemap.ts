@@ -19,17 +19,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articleEnPageCount = Math.ceil(articlesEnCount! / perPage)
   const articlesEn: RouteProps[] = []
 
-  const promosCount = await api.promo.countByLanguage("id")
-  const promoPageCount = Math.ceil(promosCount! / perPage)
-  const promos: RouteProps[] = []
+  const downloadsCount = await api.download.countByLanguage("id")
+  const downloadPageCount = Math.ceil(downloadsCount! / perPage)
+  const downloads: RouteProps[] = []
 
-  const promosEnCount = await api.promo.countByLanguage("id")
-  const promoEnPageCount = Math.ceil(promosEnCount! / perPage)
-  const promosEn: RouteProps[] = []
-
-  const topUpsCount = await api.topUp.count()
-  const topUpPageCount = Math.ceil(topUpsCount! / perPage)
-  const topUps: RouteProps[] = []
+  const downloadsEnCount = await api.download.countByLanguage("id")
+  const downloadEnPageCount = Math.ceil(downloadsEnCount! / perPage)
+  const downloadsEn: RouteProps[] = []
 
   if (typeof articlePageCount === "number") {
     for (let i = 0; i < articlePageCount; i++) {
@@ -55,55 +51,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  if (typeof promoPageCount === "number") {
-    for (let i = 0; i < promoPageCount; i++) {
+  if (typeof downloadPageCount === "number") {
+    for (let i = 0; i < downloadPageCount; i++) {
       const obj = {
-        url: `https://${`${env.NEXT_PUBLIC_DOMAIN}/sitemap/promo/${i + 1}`}`,
+        url: `https://${`${env.NEXT_PUBLIC_DOMAIN}/sitemap/download/${i + 1}`}`,
         lastModified: new Date()
           .toISOString()
           .split("T")[0] as unknown as string,
       }
-      promos.push(obj)
+      downloads.push(obj)
     }
   }
 
-  if (typeof promoEnPageCount === "number") {
-    for (let i = 0; i < promoEnPageCount; i++) {
+  if (typeof downloadEnPageCount === "number") {
+    for (let i = 0; i < downloadEnPageCount; i++) {
       const obj = {
-        url: `https://${`${env.NEXT_PUBLIC_DOMAIN}/sitemap/promo/en/${i + 1}`}`,
+        url: `https://${`${env.NEXT_PUBLIC_DOMAIN}/sitemap/download/en/${i + 1}`}`,
         lastModified: new Date()
           .toISOString()
           .split("T")[0] as unknown as string,
       }
-      promosEn.push(obj)
+      downloadsEn.push(obj)
     }
   }
 
-  if (typeof topUpPageCount === "number") {
-    for (let i = 0; i < topUpPageCount; i++) {
-      const obj = {
-        url: `https://${`${env.NEXT_PUBLIC_DOMAIN}/sitemap/top-up/${i + 1}`}`,
-        lastModified: new Date()
-          .toISOString()
-          .split("T")[0] as unknown as string,
-      }
-      topUps.push(obj)
-    }
-  }
-
-  const routes = ["", "/article", "/promo", "/top-up"].map((route) => ({
+  const routes = ["", "/article", "/download"].map((route) => ({
     url: `${env.NEXT_PUBLIC_SITE_URL}${route}`,
     lastModified: new Date().toISOString().split("T")[0],
   }))
 
-  return [
-    ...routes,
-    ...articles,
-    ...articlesEn,
-    ...promos,
-    ...promosEn,
-    ...topUps,
-  ]
+  return [...routes, ...articles, ...articlesEn, ...downloads, ...downloadsEn]
 }
 
 export const dynamic = "force-dynamic"
