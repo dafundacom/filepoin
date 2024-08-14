@@ -48,7 +48,6 @@ export default function UpsertSettingForm(props: UpsertSettingFormProps) {
 
   const t = useI18n()
   const tsSetting = useScopedI18n("setting")
-  const tsTopUp = useScopedI18n("top_up")
 
   const { mutate: upsertSetting } = api.setting.upsert.useMutation({
     onSuccess: () => {
@@ -330,26 +329,6 @@ export default function UpsertSettingForm(props: UpsertSettingFormProps) {
                   <FormControl>
                     <Input
                       placeholder={t("support_whatsapp_placeholder")}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="profit_percentage"
-              rules={{
-                required: tsTopUp("profit_percentage_required"),
-              }}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{tsTopUp("profit_percentage")}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder={tsTopUp("profit_percentage_required")}
                       {...field}
                     />
                   </FormControl>
