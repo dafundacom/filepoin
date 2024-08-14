@@ -70,14 +70,14 @@ interface SingleDownloadFileGamePageProps {
   params: {
     locale: LanguageType
     slug: string
-    version: string
+    versionSlug: string
   }
 }
 
 export default async function SingleDownloadFileGamePage({
   params,
 }: SingleDownloadFileGamePageProps) {
-  const { slug, locale, version } = params
+  const { slug, locale, versionSlug } = params
   const downloads = await api.download.byType({
     language: locale,
     type: "game",
@@ -92,7 +92,7 @@ export default async function SingleDownloadFileGamePage({
 
   const downloadFile = await api.downloadFile.byDownloadIdAndVersionSlug({
     downloadId: download?.id!,
-    versionSlug: version,
+    versionSlug: versionSlug,
   })
 
   const adsDownloadingPage = await api.ad.byPosition("downloading_page")
@@ -116,7 +116,7 @@ export default async function SingleDownloadFileGamePage({
   )
 
   const otherDownloadFilesLanguage = otherLanguageDownload?.downloadFiles.find(
-    (downloadFile) => downloadFile.versionSlug === version,
+    (downloadFile) => downloadFile.versionSlug === versionSlug,
   )
 
   if (language !== locale) {

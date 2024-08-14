@@ -213,7 +213,10 @@ export const downloadRouter = createTRPCRouter({
             id: downloadFiles.id,
             title: downloadFiles.title,
             version: downloadFiles.version,
+            versionSlug: downloadFiles.versionSlug,
             fileSize: downloadFiles.fileSize,
+            createdAt: downloadFiles.createdAt,
+            updatedAt: downloadFiles.updatedAt,
           })
           .from(downloadDownloadFiles)
           .leftJoin(
@@ -543,6 +546,7 @@ export const downloadRouter = createTRPCRouter({
                     id: true,
                     title: true,
                     language: true,
+                    type: true,
                   },
                 },
               },

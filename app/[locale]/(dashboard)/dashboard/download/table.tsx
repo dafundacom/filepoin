@@ -141,7 +141,7 @@ export default function DownloadTable(props: DownloadTableProps) {
                           void deleteDownload(download.id)
                         }}
                         editUrl={`/dashboard/download/edit/${download.id}`}
-                        viewUrl={`/download/${download.slug}`}
+                        viewUrl={`/download/${download.type}/${download.slug}`}
                         description={download.title}
                       />
                     ) : (
@@ -155,7 +155,7 @@ export default function DownloadTable(props: DownloadTableProps) {
                             ? `/dashboard/download/translate/en/${download.downloadTranslationId}`
                             : `/dashboard/download/translate/id/${download.downloadTranslationId}`
                         }
-                        viewUrl={`/download/${download.slug}`}
+                        viewUrl={`/download/${download.type}/${download.slug}`}
                         description={download.title}
                       />
                     )}
