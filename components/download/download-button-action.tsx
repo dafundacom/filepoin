@@ -35,19 +35,20 @@ const DownloadButtonAction: React.FunctionComponent<
 
   return (
     <div className="flex w-full flex-col gap-5">
-      <Button
-        aria-label="Download"
-        className="w-44"
-        onClick={handleDownloadClick}
-        disabled={showCountdown}
-      >
-        Download ({fileSize})
-      </Button>
-      {showCountdown && (
-        <div className="w-full bg-success/10 p-7 text-foreground">
-          {`Download will started in ${difference} second`}
-        </div>
-      )}
+      <div>
+        <Button
+          aria-label="Download"
+          onClick={handleDownloadClick}
+          disabled={showCountdown}
+        >
+          Download ({fileSize})
+        </Button>
+        {showCountdown && (
+          <div className="w-full bg-success/10 p-7 text-foreground">
+            {`Download will started in ${difference} second`}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
