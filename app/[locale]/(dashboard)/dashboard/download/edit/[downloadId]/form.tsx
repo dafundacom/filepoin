@@ -139,6 +139,7 @@ const EditDownloadForm: React.FunctionComponent<EditDownloadFormProps> = (
         })
       : [],
   )
+
   const [selectedDownloadFile, setSelectedDownloadFile] = React.useState<
     SelectedDownloadFilesProps[]
   >(download ? [...download.downloadFiles] : [])
@@ -486,6 +487,7 @@ const EditDownloadForm: React.FunctionComponent<EditDownloadFormProps> = (
                           <DashboardAddTopics
                             locale={valueLanguage}
                             fieldName="topics"
+                            mode="edit"
                             control={form.control}
                             topics={topics}
                             addTopics={setTopics}
@@ -881,7 +883,6 @@ const EditDownloadForm: React.FunctionComponent<EditDownloadFormProps> = (
                           onDelete={() => {
                             void handleDeleteDownloadFile(downloadFile)
                           }}
-                          editUrl={`/dashboard/download/file/edit/${downloadFile.id}`}
                           description={downloadFile.title}
                         />
                       </TableCell>

@@ -11,6 +11,7 @@ import DownloadList from "@/components/download/download-list"
 import Image from "@/components/image"
 import env from "@/env.mjs"
 import { api } from "@/lib/trpc/server"
+import type { DownloadType } from "@/lib/validation/download"
 import type { LanguageType } from "@/lib/validation/language"
 
 const Ad = React.lazy(() => import("@/components/ad"))
@@ -18,15 +19,16 @@ const Ad = React.lazy(() => import("@/components/ad"))
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string; versionSlug: string; locale: LanguageType }
+  params: {
+    type: DownloadType
+    slug: string
+    versionSlug: string
+    locale: LanguageType
+  }
 }): Promise<Metadata> {
-  const { locale, slug, versionSlug } = params
+  const { locale, type, slug, versionSlug } = params
 
-  const download = await api.download.bySlug({
-    slug: slug,
-    downloadFilePage: 1,
-    downloadFilePerPage: 10,
-  })
+  const download = await api.download.bySlug(slug)
 
   const downloadFile = await api.downloadFile.byDownloadIdAndVersionSlug({
     downloadId: download?.id!,
@@ -37,12 +39,12 @@ export async function generateMetadata({
     title: `Download ${download?.metaTitle ?? download?.title} ${downloadFile?.version} untuk ${download?.operatingSystem}`,
     description: download?.metaDescription ?? download.excerpt,
     alternates: {
-      canonical: `${env.NEXT_PUBLIC_SITE_URL}/download/app/${download?.slug}/${downloadFile?.versionSlug}`,
+      canonical: `${env.NEXT_PUBLIC_SITE_URL}/download/${type}/${download?.slug}/${downloadFile?.versionSlug}`,
     },
     openGraph: {
       title: `Download ${download?.metaTitle ?? download?.title} ${downloadFile?.version} untuk ${download?.operatingSystem}`,
       description: download?.metaDescription ?? download?.excerpt,
-      url: `${env.NEXT_PUBLIC_SITE_URL}/download/app/${download?.slug}/${downloadFile?.versionSlug}`,
+      url: `${env.NEXT_PUBLIC_SITE_URL}/download/${type}/${download?.slug}/${downloadFile?.versionSlug}`,
       images: [
         {
           url: download?.featuredImage.url!,
@@ -69,6 +71,7 @@ export async function generateMetadata({
 interface SingleDownloadFileAppPageProps {
   params: {
     locale: LanguageType
+    type: DownloadType
     slug: string
     versionSlug: string
   }
@@ -77,18 +80,16 @@ interface SingleDownloadFileAppPageProps {
 export default async function SingleDownloadFileAppPage({
   params,
 }: SingleDownloadFileAppPageProps) {
-  const { slug, versionSlug, locale } = params
+  const { type, slug, versionSlug, locale } = params
+
   const downloads = await api.download.byType({
     language: locale,
-    type: "app",
+    type: type,
     page: 1,
     perPage: 10,
   })
-  const download = await api.download.bySlug({
-    slug: slug,
-    downloadFilePage: 1,
-    downloadFilePerPage: 10,
-  })
+
+  const download = await api.download.bySlug(slug)
 
   const downloadFile = await api.downloadFile.byDownloadIdAndVersionSlug({
     downloadId: download?.id!,
@@ -122,7 +123,7 @@ export default async function SingleDownloadFileAppPage({
   if (language !== locale) {
     if (otherLanguageDownload && otherDownloadFilesLanguage)
       redirect(
-        `/download/app/${otherLanguageDownload.slug}/${otherDownloadFilesLanguage.versionSlug}`,
+        `/download/${type}/${otherLanguageDownload.slug}/${otherDownloadFilesLanguage.versionSlug}`,
         RedirectType.replace,
       )
     else notFound()
@@ -132,7 +133,7 @@ export default async function SingleDownloadFileAppPage({
     <>
       <ArticleJsonLd
         useAppDir={true}
-        url={`${env.NEXT_PUBLIC_SITE_URL}/download/app/${download.slug}/${downloadFile?.version}`}
+        url={`${env.NEXT_PUBLIC_SITE_URL}/download/${type}/${download.slug}/${downloadFile?.version}`}
         title={download.metaTitle ?? download.title}
         images={[download?.featuredImage?.url!]}
         datePublished={download.createdAt as unknown as string}
@@ -170,14 +171,32 @@ export default async function SingleDownloadFileAppPage({
             name: "Download",
             item: `${env.NEXT_PUBLIC_SITE_URL}/download`,
           },
+          {
+            position: 3,
+            name: download.type,
+            item: `${env.NEXT_PUBLIC_SITE_URL}/download/${download.type}`,
+          },
+          {
+            position: 4,
+            name: download.topics?.[0]?.title,
+            item: `${env.NEXT_PUBLIC_SITE_URL}/download/topic/${download?.topics[0]?.slug}`,
+          },
+          {
+            position: 5,
+            name: download.title,
+            item: `${env.NEXT_PUBLIC_SITE_URL}/download/${download.type}/${download.slug}`,
+          },
+          {
+            position: 6,
+            name: `${download.title} ${downloadFile?.version}`,
+            item: `${env.NEXT_PUBLIC_SITE_URL}/download/${download.type}/${download.slug}/${versionSlug}`,
+          },
         ]}
       />
       <section className="fade-up-element flex w-full flex-col pt-5">
         <div className="mx-auto flex w-full flex-row max-[991px]:px-4 md:max-[991px]:max-w-[750px] min-[992px]:max-[1199px]:max-w-[970px] min-[1200px]:max-w-[1170px]">
           <div className="flex w-full flex-col overflow-x-hidden px-4 lg:mr-4">
-            <div
-              className={"my-5 flex flex-col space-x-2 space-y-2 lg:flex-row"}
-            >
+            <div className="my-5 flex flex-col space-x-2 space-y-2 lg:flex-row">
               <div className="w-full space-y-4">
                 <div
                   id="download"

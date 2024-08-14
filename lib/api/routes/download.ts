@@ -140,6 +140,7 @@ export const downloadRouter = createTRPCRouter({
             id: downloadFiles.id,
             title: downloadFiles.title,
             version: downloadFiles.version,
+            fileSize: downloadFiles.fileSize,
           })
           .from(downloadDownloadFiles)
           .leftJoin(
@@ -191,85 +192,73 @@ export const downloadRouter = createTRPCRouter({
         }
       }
     }),
-  bySlug: publicProcedure
-    .input(
-      z.object({
-        slug: z.string(),
-        downloadFilePage: z.number(),
-        downloadFilePerPage: z.number(),
-      }),
-    )
-    .query(async ({ ctx, input }) => {
-      try {
-        const downloadData = await ctx.db
-          .select()
-          .from(downloads)
-          .leftJoin(medias, eq(medias.id, downloads.featuredImageId))
-          .where(eq(downloads.slug, input.slug))
-          .limit(1)
+  bySlug: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    try {
+      const downloadData = await ctx.db
+        .select()
+        .from(downloads)
+        .leftJoin(medias, eq(medias.id, downloads.featuredImageId))
+        .where(eq(downloads.slug, input))
+        .limit(1)
 
-        const downloadFilesData = await ctx.db
-          .select({
-            id: downloadFiles.id,
-            title: downloadFiles.title,
-            version: downloadFiles.version,
-            versionSlug: downloadFiles.versionSlug,
-            fileSize: downloadFiles.fileSize,
-            createdAt: downloadFiles.createdAt,
-            updatedAt: downloadFiles.updatedAt,
-          })
-          .from(downloadDownloadFiles)
-          .leftJoin(
-            downloads,
-            eq(downloadDownloadFiles.downloadId, downloads.id),
-          )
-          .leftJoin(
-            downloadFiles,
-            eq(downloadDownloadFiles.downloadFileId, downloadFiles.id),
-          )
-          .orderBy(desc(downloadFiles.createdAt))
-          .where(eq(downloads.id, downloadData[0].downloads.id))
-          .limit(input.downloadFilePage)
-          .offset((input.downloadFilePage - 1) * input.downloadFilePerPage)
+      const downloadFilesData = await ctx.db
+        .select({
+          id: downloadFiles.id,
+          title: downloadFiles.title,
+          version: downloadFiles.version,
+          versionSlug: downloadFiles.versionSlug,
+          fileSize: downloadFiles.fileSize,
+          createdAt: downloadFiles.createdAt,
+          updatedAt: downloadFiles.updatedAt,
+        })
+        .from(downloadDownloadFiles)
+        .leftJoin(downloads, eq(downloadDownloadFiles.downloadId, downloads.id))
+        .leftJoin(
+          downloadFiles,
+          eq(downloadDownloadFiles.downloadFileId, downloadFiles.id),
+        )
+        .orderBy(desc(downloadFiles.createdAt))
+        .where(eq(downloads.id, downloadData[0].downloads.id))
+        .limit(20)
 
-        const downloadTopicsData = await ctx.db
-          .select({ id: topics.id, title: topics.title, slug: topics.slug })
-          .from(downloadTopics)
-          .leftJoin(downloads, eq(downloadTopics.downloadId, downloads.id))
-          .leftJoin(topics, eq(downloadTopics.topicId, topics.id))
-          .where(eq(downloads.id, downloadData[0].downloads.id))
+      const downloadTopicsData = await ctx.db
+        .select({ id: topics.id, title: topics.title, slug: topics.slug })
+        .from(downloadTopics)
+        .leftJoin(downloads, eq(downloadTopics.downloadId, downloads.id))
+        .leftJoin(topics, eq(downloadTopics.topicId, topics.id))
+        .where(eq(downloads.id, downloadData[0].downloads.id))
 
-        const downloadAuthorsData = await ctx.db
-          .select({ id: users.id, name: users.name, username: users.username })
-          .from(downloadAuthors)
-          .leftJoin(downloads, eq(downloadAuthors.downloadId, downloads.id))
-          .leftJoin(users, eq(downloadAuthors.userId, users.id))
-          .where(eq(downloads.id, downloadData[0].downloads.id))
+      const downloadAuthorsData = await ctx.db
+        .select({ id: users.id, name: users.name, username: users.username })
+        .from(downloadAuthors)
+        .leftJoin(downloads, eq(downloadAuthors.downloadId, downloads.id))
+        .leftJoin(users, eq(downloadAuthors.userId, users.id))
+        .where(eq(downloads.id, downloadData[0].downloads.id))
 
-        const data = downloadData.map((item) => ({
-          ...item.downloads,
-          featuredImage: {
-            id: item?.medias?.id!,
-            url: item?.medias?.url!,
-          },
-          downloadFiles: downloadFilesData,
-          topics: downloadTopicsData,
-          authors: downloadAuthorsData,
-        }))
+      const data = downloadData.map((item) => ({
+        ...item.downloads,
+        featuredImage: {
+          id: item?.medias?.id!,
+          url: item?.medias?.url!,
+        },
+        downloadFiles: downloadFilesData,
+        topics: downloadTopicsData,
+        authors: downloadAuthorsData,
+      }))
 
-        return data[0]
-      } catch (error) {
-        console.log("Error:", error)
-        if (error instanceof TRPCError) {
-          throw error
-        } else {
-          throw new TRPCError({
-            code: "INTERNAL_SERVER_ERROR",
-            message: "An internal error occurred",
-          })
-        }
+      return data[0]
+    } catch (error) {
+      console.log("Error:", error)
+      if (error instanceof TRPCError) {
+        throw error
+      } else {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An internal error occurred",
+        })
       }
-    }),
+    }
+  }),
   byLanguage: publicProcedure
     .input(
       z.object({

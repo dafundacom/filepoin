@@ -14,6 +14,7 @@ import { Icon } from "@/components/ui/icon"
 import env from "@/env.mjs"
 import { api } from "@/lib/trpc/server"
 import { formatDate, splitReactNodes } from "@/lib/utils"
+import type { DownloadType } from "@/lib/validation/download"
 import type { LanguageType } from "@/lib/validation/language"
 
 const Ad = React.lazy(() => import("@/components/ad"))
@@ -21,26 +22,22 @@ const Ad = React.lazy(() => import("@/components/ad"))
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string; locale: LanguageType }
+  params: { type: DownloadType; slug: string; locale: LanguageType }
 }): Promise<Metadata> {
-  const { locale, slug } = params
+  const { locale, type, slug } = params
 
-  const download = await api.download.bySlug({
-    slug: slug,
-    downloadFilePage: 1,
-    downloadFilePerPage: 10,
-  })
+  const download = await api.download.bySlug(slug)
 
   return {
     title: `Download ${download?.metaTitle ?? download?.title} untuk ${download?.operatingSystem} Versi Terbaru`,
     description: download?.metaDescription ?? download?.excerpt,
     alternates: {
-      canonical: `${env.NEXT_PUBLIC_SITE_URL}/download/game/${slug}`,
+      canonical: `${env.NEXT_PUBLIC_SITE_URL}/download/${type}/${slug}`,
     },
     openGraph: {
       title: `Download ${download?.metaTitle ?? download?.title} untuk ${download?.operatingSystem} Versi Terbaru`,
       description: download?.metaDescription ?? download?.excerpt,
-      url: `${env.NEXT_PUBLIC_SITE_URL}/download/game/${slug}`,
+      url: `${env.NEXT_PUBLIC_SITE_URL}/download/${type}/${slug}`,
       images: [
         {
           url: download?.featuredImage.url!,
@@ -64,29 +61,27 @@ export async function generateMetadata({
   }
 }
 
-interface SingleDownloadGamePageProps {
+interface SingleDownloadAppPageProps {
   params: {
     locale: LanguageType
+    type: DownloadType
     slug: string
   }
 }
 
-export default async function SigleDownloadGamePage({
+export default async function SigleDownloadAppPage({
   params,
-}: SingleDownloadGamePageProps) {
-  const { slug, locale } = params
+}: SingleDownloadAppPageProps) {
+  const { type, slug, locale } = params
 
   const downloads = await api.download.byType({
     language: locale,
-    type: "game",
+    type: type,
     page: 1,
     perPage: 10,
   })
-  const download = await api.download.bySlug({
-    slug: slug,
-    downloadFilePage: 1,
-    downloadFilePerPage: 10,
-  })
+
+  const download = await api.download.bySlug(slug)
 
   const language = download?.language
 
@@ -105,7 +100,7 @@ export default async function SigleDownloadGamePage({
   if (language !== locale) {
     if (otherLanguageDownload)
       redirect(
-        `/download/game/${otherLanguageDownload.slug}`,
+        `/download/${type}/${otherLanguageDownload.slug}`,
         RedirectType.replace,
       )
     else notFound()
@@ -115,7 +110,7 @@ export default async function SigleDownloadGamePage({
     limit: 10,
     topicId: download?.topics?.[0]?.id ?? "",
     language: locale,
-    currentDownloadId: download?.slug,
+    currentDownloadId: download?.id,
   })
 
   const adsSingleDownloadAbove = await api.ad.byPosition(
@@ -145,7 +140,7 @@ export default async function SigleDownloadGamePage({
     <>
       <ArticleJsonLd
         useAppDir={true}
-        url={`${env.NEXT_PUBLIC_SITE_URL}/download/game/${download.slug}`}
+        url={`${env.NEXT_PUBLIC_SITE_URL}/download/${type}/${download.slug}`}
         title={`Download ${download?.metaTitle ?? download?.title} untuk ${download?.operatingSystem} Versi Terbaru`}
         images={[download?.featuredImage?.url!]}
         datePublished={download.createdAt as unknown as string}
@@ -193,6 +188,11 @@ export default async function SigleDownloadGamePage({
             name: download.topics?.[0]?.title,
             item: `${env.NEXT_PUBLIC_SITE_URL}/download/topic/${download?.topics[0]?.slug}`,
           },
+          {
+            position: 5,
+            name: download.title,
+            item: `${env.NEXT_PUBLIC_SITE_URL}/download/${download.type}/${download.slug}`,
+          },
         ]}
       />
       <div className="fade-up-element mx-auto flex w-full flex-row pt-5 md:max-[991px]:max-w-[750px] min-[992px]:max-[1199px]:max-w-[970px] min-[1200px]:max-w-[1170px]">
@@ -217,14 +217,13 @@ export default async function SigleDownloadGamePage({
                     <h2 className="line-clamp-1 text-xl md:text-3xl">
                       {download?.title}
                     </h2>
-
                     <div className="flex flex-wrap gap-2">
                       {download && download.downloadFiles.length > 0 && (
                         <>
                           <p>{downloadFile?.version}</p>
                           <NextLink
                             aria-label="Show All Version Page"
-                            href={`/download/game/${download.slug}#all-version`}
+                            href={`/download/app/${download.slug}#all-version`}
                             className="text-success"
                           >
                             Show All Version
@@ -233,27 +232,15 @@ export default async function SigleDownloadGamePage({
                       )}
                     </div>
                     <p>{download?.developer}</p>
-                    <div className={"inline-flex space-x-2 pt-12"}>
-                      <Button type="button" aria-label="Official Web">
-                        <a
-                          href={download?.officialWebsite}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Official Web
-                        </a>
-                      </Button>
-                      {download && download.downloadFiles.length > 0 && (
-                        <Button asChild aria-label="Download">
-                          <NextLink
-                            aria-label="Download"
-                            href={`/download/game/${download.slug}/${downloadFile?.versionSlug}`}
-                          >
-                            Download
-                          </NextLink>
-                        </Button>
-                      )}
-                    </div>
+                    <Button type="button" aria-label="Official Web">
+                      <a
+                        href={download?.officialWebsite}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Official Web
+                      </a>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -365,7 +352,7 @@ export default async function SigleDownloadGamePage({
                           key={downloadFile.id}
                         >
                           <NextLink
-                            href={`/download/game/${download.slug}/${downloadFile.versionSlug!}`}
+                            href={`/download/app/${download.slug}/${downloadFile.versionSlug!}`}
                             className="text-background"
                           >
                             <p className="text-lg font-semibold">
@@ -383,6 +370,18 @@ export default async function SigleDownloadGamePage({
                       )
                     })}
                 </div>
+              </div>
+              <div className="flex items-center justify-center space-x-2 pt-12">
+                {download && download.downloadFiles.length > 0 && (
+                  <Button asChild aria-label="Download">
+                    <NextLink
+                      aria-label="Download"
+                      href={`/download/app/${download.slug}/${downloadFile?.versionSlug}`}
+                    >
+                      Download
+                    </NextLink>
+                  </Button>
+                )}
               </div>
               {/* <React.Suspense> */}
               {/*   <section className="my-5" id="comment"> */}

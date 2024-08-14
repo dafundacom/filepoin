@@ -259,7 +259,7 @@ const DashboardAddTopics: React.FunctionComponent<DashboardAddTopicsProps> = (
     <div className="space-y-2">
       <FormLabel>{t("topics")}</FormLabel>
       <div className="rounded-md border border-muted/30 bg-muted/100">
-        <div className="parent-focus flex max-w-[300px] flex-row flex-wrap items-center justify-start gap-2 p-2">
+        <div className="flex max-w-[300px] flex-row flex-wrap items-center justify-start gap-2 p-2">
           {selectedTopics.length > 0 &&
             selectedTopics.map((topic) => {
               return (

@@ -9,6 +9,8 @@ import DownloadListCategories from "@/components/download/download-list-categori
 import DownloadSearch from "@/components/download/download-search"
 import env from "@/env.mjs"
 import { api } from "@/lib/trpc/server"
+import { toTitleCase } from "@/lib/utils"
+import type { DownloadType } from "@/lib/validation/download"
 import type { LanguageType } from "@/lib/validation/language"
 
 const Ad = React.lazy(() => import("@/components/ad"))
@@ -20,35 +22,35 @@ const InfiniteScrollDownload = React.lazy(
 export function generateMetadata({
   params,
 }: {
-  params: { slug: string; locale: LanguageType }
+  params: { type: DownloadType; locale: LanguageType }
 }): Metadata {
-  const { locale } = params
+  const { locale, type } = params
 
   return {
-    title: "Download Game",
-    description: `${env.NEXT_PUBLIC_SITE_TITLE} Download Game`,
+    title: `Download ${toTitleCase(type)}`,
+    description: `${env.NEXT_PUBLIC_SITE_TITLE} Download ${toTitleCase(type)}`,
     alternates: {
-      canonical: `${env.NEXT_PUBLIC_SITE_URL}/download/game/`,
+      canonical: `${env.NEXT_PUBLIC_SITE_URL}/download/${type}/`,
     },
     openGraph: {
-      title: "Download Game",
-      description: `${env.NEXT_PUBLIC_SITE_TITLE} Download Game`,
-      url: `${env.NEXT_PUBLIC_SITE_URL}/download/game/`,
+      title: "Download App",
+      description: `${env.NEXT_PUBLIC_SITE_TITLE} Download ${toTitleCase(type)}`,
+      url: `${env.NEXT_PUBLIC_SITE_URL}/download/${type}/`,
       locale: locale,
     },
   }
 }
 
-export default async function DownloadGamePage({
+export default async function DownloadAppPage({
   params,
 }: {
-  params: { locale: LanguageType }
+  params: { locale: LanguageType; type: DownloadType }
 }) {
-  const { locale } = params
+  const { locale, type } = params
 
-  const games = await api.download.byType({
+  const apps = await api.download.byType({
     language: locale,
-    type: "game",
+    type: type,
     page: 1,
     perPage: 10,
   })
@@ -77,7 +79,6 @@ export default async function DownloadGamePage({
               <DownloadSearch />
             </div>
           </div>
-
           <div>
             <div className="mb-2">
               <h2>Pilih Kategori</h2>
@@ -87,15 +88,15 @@ export default async function DownloadGamePage({
         </div>
         <div className="w-full px-4">
           <div className={"my-2 flex flex-row justify-start"}>
-            <h2>Games</h2>
+            <h2>{toTitleCase(type)}</h2>
           </div>
-          <DownloadList downloads={games!} />
+          <DownloadList downloads={apps!} />
         </div>
         <div className="w-full px-4">
           <div className={"my-2 flex flex-row justify-start"}>
             <h2>Newest</h2>
           </div>
-          <InfiniteScrollDownload locale={locale} type="game" />
+          <InfiniteScrollDownload locale={locale} type={type} />
         </div>
       </div>
     </>

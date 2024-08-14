@@ -44,6 +44,13 @@ export const resizeImage = (file: Blob): Promise<Blob> =>
     )
   })
 
+export function toTitleCase(str: string) {
+  return str.replace(
+    /\w\S*/g,
+    (text) => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase(),
+  )
+}
+
 export function slugify(text: string) {
   return text
     .toString() // Cast to string (optional)

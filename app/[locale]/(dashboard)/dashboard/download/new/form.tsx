@@ -800,7 +800,6 @@ export default function CreateDownloadForm(props: CreateDownloadFormProps) {
                           onDelete={() => {
                             void handleDeleteDownloadFile(downloadFile)
                           }}
-                          editUrl={`/dashboard/download/file/edit/${downloadFile.id}`}
                           description={downloadFile.title}
                         />
                       </TableCell>

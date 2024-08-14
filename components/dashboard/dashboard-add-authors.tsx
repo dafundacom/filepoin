@@ -74,7 +74,7 @@ const DashboardAddAuthors: React.FunctionComponent<DashboardAddAuthorsProps> = (
       setSearchQuery(values.name)
       if (searchResults) {
         const searchResult = searchResults?.find(
-          (topic) => topic.name === values.name,
+          (author) => author.name === values.name,
         )
         if (searchResult) {
           if (
