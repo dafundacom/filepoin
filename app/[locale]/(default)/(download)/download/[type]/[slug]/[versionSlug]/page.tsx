@@ -2,13 +2,14 @@
 
 import * as React from "react"
 import type { Metadata } from "next"
+import NextLink from "next/link"
 import { notFound, redirect, RedirectType } from "next/navigation"
 import { ArticleJsonLd, BreadcrumbJsonLd, SoftwareAppJsonLd } from "next-seo"
 
-import DownloadButtonAction from "@/components/download/download-button-action"
 import DownloadCardSide from "@/components/download/download-card-side"
 import DownloadList from "@/components/download/download-list"
 import Image from "@/components/image"
+import { Button } from "@/components/ui/button"
 import env from "@/env.mjs"
 import { api } from "@/lib/trpc/server"
 import type { DownloadType } from "@/lib/validation/download"
@@ -96,7 +97,9 @@ export default async function SingleDownloadFileAppPage({
     versionSlug: versionSlug,
   })
 
-  const adsDownloadingPage = await api.ad.byPosition("downloading_page")
+  const adsSingleDownloadBelow = await api.ad.byPosition(
+    "single_download_below_content",
+  )
 
   const language = download?.language
 
@@ -227,16 +230,20 @@ export default async function SingleDownloadFileAppPage({
                       </div>
                     </div>
                     <div className="inline-flex w-full space-x-2 pt-12">
-                      <DownloadButtonAction
-                        downloadLink={downloadFile?.downloadLink}
-                        fileSize={downloadFile?.fileSize}
-                      />
+                      <Button asChild>
+                        <NextLink
+                          target="_blank"
+                          href={`/download/app/${download.slug}/${downloadFile?.versionSlug}/downloading`}
+                        >
+                          {`Download (${downloadFile.fileSize})`}
+                        </NextLink>
+                      </Button>
+                      {adsSingleDownloadBelow &&
+                        adsSingleDownloadBelow.length > 0 &&
+                        adsSingleDownloadBelow.map((ad) => {
+                          return <Ad ad={ad} key={ad.id} />
+                        })}
                     </div>
-                    {adsDownloadingPage &&
-                      adsDownloadingPage.length > 0 &&
-                      adsDownloadingPage.map((ad) => {
-                        return <Ad ad={ad} key={ad.id} />
-                      })}
                   </div>
                 </div>
                 <div className="w-full px-4">

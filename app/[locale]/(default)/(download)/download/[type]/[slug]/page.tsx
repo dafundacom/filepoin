@@ -341,8 +341,8 @@ export default async function SigleDownloadAppPage({
                 )}
               </div>
               <div id="all-version" className="mb-5 space-y-2">
-                <h2>All version</h2>
-                <div className="grid grid-cols-3 gap-4 rounded-lg bg-background">
+                <h2 className="text-xl">All version</h2>
+                <div className="grid grid-cols-3 gap-4">
                   {download &&
                     download.downloadFiles.length > 0 &&
                     download.downloadFiles.map((downloadFile) => {
@@ -352,7 +352,7 @@ export default async function SigleDownloadAppPage({
                           key={downloadFile.id}
                         >
                           <NextLink
-                            href={`/download/app/${download.slug}/${downloadFile.versionSlug!}`}
+                            href={`/download/${type}/${download.slug}/${downloadFile.versionSlug!}`}
                             className="text-background"
                           >
                             <p className="text-lg font-semibold">
@@ -371,17 +371,27 @@ export default async function SigleDownloadAppPage({
                     })}
                 </div>
               </div>
-              <div className="flex items-center justify-center space-x-2 pt-12">
-                {download && download.downloadFiles.length > 0 && (
-                  <Button asChild aria-label="Download">
-                    <NextLink
-                      aria-label="Download"
-                      href={`/download/app/${download.slug}/${downloadFile?.versionSlug}`}
-                    >
-                      Download
-                    </NextLink>
-                  </Button>
-                )}
+              <h2 className="text-xl">{`Download ${download.title}`}</h2>
+              <div className="my-12 flex flex-col space-y-2 rounded-xl bg-background p-5 shadow">
+                {download &&
+                  download.downloadFiles.length > 0 &&
+                  download.downloadFiles.map((downloadFile) => {
+                    return (
+                      <Button
+                        asChild
+                        aria-label="Download"
+                        key={downloadFile.id}
+                      >
+                        <NextLink
+                          aria-label="Download"
+                          target="_blank"
+                          href={`/download/app/${download.slug}/${downloadFile?.versionSlug}/downloading`}
+                        >
+                          {`Download ${downloadFile.title} (${downloadFile.fileSize})`}
+                        </NextLink>
+                      </Button>
+                    )
+                  })}
               </div>
               {/* <React.Suspense> */}
               {/*   <section className="my-5" id="comment"> */}
@@ -394,8 +404,8 @@ export default async function SigleDownloadAppPage({
               {/*   </section> */}
               {/* </React.Suspense> */}
               <div className="w-full px-4">
-                <div className={"my-2 flex flex-row justify-start"}>
-                  <h2>Related</h2>
+                <div className="my-2 flex flex-row justify-start">
+                  <h2 className="text-xl">Related</h2>
                 </div>
                 {<DownloadList downloads={relatedDownloads?.downloads!} />}
               </div>

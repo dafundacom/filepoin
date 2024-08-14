@@ -15,38 +15,35 @@ const DownloadButtonAction: React.FunctionComponent<
 > = (props) => {
   const { downloadLink, fileSize } = props
 
-  const [showCountdown, setShowCountdown] = React.useState<boolean>(false)
-  const [difference, setDifference] = React.useState<number>(10)
+  const [showCountdown, setShowCountdown] = React.useState<boolean>(true)
+  const [difference, setDifference] = React.useState<number>(20)
 
-  const handleDownloadClick = () => {
-    setShowCountdown(true)
-
+  React.useEffect(() => {
     const countdownInterval = setInterval(() => {
-      setDifference((prevDifference) => prevDifference - 1)
-    }, 1000)
+      setDifference((prevDifference) => {
+        if (prevDifference <= 1) {
+          clearInterval(countdownInterval)
+          setShowCountdown(false)
+          return 0
+        }
+        return prevDifference - 1
+      })
+    }, 2000)
 
-    setTimeout(() => {
-      clearInterval(countdownInterval)
-      window.open(downloadLink, "_blank")
-      setShowCountdown(false)
-      setDifference(10)
-    }, 10000)
-  }
+    return () => clearInterval(countdownInterval) // Cleanup on unmount
+  }, [downloadLink])
 
   return (
-    <div className="flex w-full flex-col gap-5">
+    <div className="flex w-full flex-col items-center justify-center">
       <div>
-        <Button
-          aria-label="Download"
-          onClick={handleDownloadClick}
-          disabled={showCountdown}
-        >
-          Download ({fileSize})
-        </Button>
-        {showCountdown && (
-          <div className="w-full bg-success/10 p-7 text-foreground">
-            {`Download will started in ${difference} second`}
+        {showCountdown ? (
+          <div className="w-full rounded-xl bg-success/10 p-7 text-lg font-semibold text-foreground lg:text-xl">
+            {`Download will start in ${difference} seconds`}
           </div>
+        ) : (
+          <Button aria-label="Download" asChild>
+            <a href={downloadLink}>Download ({fileSize})</a>
+          </Button>
         )}
       </div>
     </div>
