@@ -168,14 +168,16 @@ const getSuggestionItems = ({ query }: { query: string }) => {
         const url = prompt("Enter X Tweet URL")
         const regex = /^https?:\/\/twitter\.com\/\w+\/status\/(\d+).*$/
 
-        if (url && url.match(regex)) {
-          // const match = url.match(regex)
-          editor.commands.insertContent({
-            type: "reactXEmbed",
-            attrs: {
-              tweetUrl: url,
-            },
-          })
+        if (url) {
+          const match = regex.exec(url)
+          if (match) {
+            editor.commands.insertContent({
+              type: "reactXEmbed",
+              attrs: {
+                tweetUrl: url,
+              },
+            })
+          }
         }
       },
     },

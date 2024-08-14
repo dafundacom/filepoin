@@ -58,7 +58,7 @@ const AdsenseScript = () => {
           insWithoutIframe.forEach((el) => {
             if (!el.querySelector("iframe")) {
               //@ts-ignore
-              ; (window.adsbygoogle = window.adsbygoogle || []).push({})
+              ;(window.adsbygoogle = window.adsbygoogle || []).push({})
             }
             window.removeEventListener("scroll", handleAdScroll)
           })

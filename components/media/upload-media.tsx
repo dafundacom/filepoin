@@ -62,6 +62,7 @@ const UploadMedia: React.FunctionComponent<UploadMediaProps> = (props) => {
 
       startTransition(() => {
         if (data) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           setToggleUpload && setToggleUpload((prev) => !prev)
           setPreviewImages([])
           form.reset()
