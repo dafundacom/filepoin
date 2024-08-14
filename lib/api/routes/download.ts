@@ -858,7 +858,7 @@ export const downloadRouter = createTRPCRouter({
         await ctx.db.transaction(async () => {
           await ctx.db
             .delete(downloadDownloadFiles)
-            .where(eq(downloadTopics.downloadId, input.id))
+            .where(eq(downloadDownloadFiles.downloadId, input.id))
           await ctx.db
             .delete(downloadTopics)
             .where(eq(downloadTopics.downloadId, input.id))
