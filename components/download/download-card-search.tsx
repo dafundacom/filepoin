@@ -2,10 +2,9 @@ import * as React from "react"
 import NextLink from "next/link"
 
 import Image from "@/components/image"
-import env from "@/env.mjs"
 import type { SelectDownload, SelectMedia } from "@/lib/db/schema"
 
-type DownloadDataProps = Pick<SelectDownload, "title" | "slug"> & {
+type DownloadDataProps = Pick<SelectDownload, "title" | "type" | "slug"> & {
   featuredImage: Pick<SelectMedia, "url">
 }
 
@@ -18,12 +17,12 @@ const DownloadCardSearch: React.FunctionComponent<DownloadCardSearchProps> = (
 ) => {
   const { download } = props
 
-  const { title, slug, featuredImage } = download
+  const { title, type, slug, featuredImage } = download
 
   return (
     <NextLink
       aria-label={title}
-      href={`${env.NEXT_PUBLIC_SITE_URL}/download/${slug}`}
+      href={`/download/${type}/${slug}`}
       className="mb-2 w-full"
     >
       <div className="flex flex-row hover:bg-accent">

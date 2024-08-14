@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import ArticleCardSearch from "@/components/article/article-card-search"
+import DownloadCardSearch from "@/components/download/download-card-search"
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { Input } from "@/components/ui/input"
@@ -30,6 +31,11 @@ const SearchTopNav: React.FC<SearchTopNavProps> = ({ locale }) => {
   const ts = useScopedI18n("search")
 
   const { data: articles } = api.article.search.useQuery({
+    searchQuery,
+    language: locale,
+  })
+
+  const { data: downloads } = api.download.search.useQuery({
     searchQuery,
     language: locale,
   })
@@ -97,10 +103,23 @@ const SearchTopNav: React.FC<SearchTopNavProps> = ({ locale }) => {
                   </div>
                 </>
               )}
-              {(!articles || articles.length === 0) && (
-                /* (!promos || promos.length === 0) && */
-                <p className="text-lg font-semibold">{ts("not_found")}</p>
+              {downloads && downloads.length > 0 && (
+                <>
+                  <h4 className="mb-2 border-b">{t("article")}</h4>
+                  <div className="flex flex-col">
+                    {downloads.map((download) => (
+                      <DownloadCardSearch
+                        key={download.slug}
+                        download={download}
+                      />
+                    ))}
+                  </div>
+                </>
               )}
+              {(!articles || articles.length === 0) &&
+                (!downloads || downloads.length === 0) && (
+                  <p className="text-lg font-semibold">{ts("not_found")}</p>
+                )}
             </div>
           )}
         </div>
