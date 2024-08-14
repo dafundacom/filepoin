@@ -3,6 +3,7 @@ import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core"
 
 import { USER_ROLE } from "@/lib/validation/user"
 import { articleAuthors, articleEditors } from "./article"
+import { downloadAuthors } from "./download"
 import { userLinks } from "./user-link"
 
 export const userRoleEnum = pgEnum("user_role", USER_ROLE)
@@ -48,6 +49,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   links: many(userLinks),
   articleAuthors: many(articleAuthors),
   articleEditors: many(articleEditors),
+  downloadAuthors: many(downloadAuthors),
 }))
 
 export type InsertUser = typeof users.$inferInsert

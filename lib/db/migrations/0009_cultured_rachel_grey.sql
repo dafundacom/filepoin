@@ -1,0 +1,1 @@
+DROP TABLE "_download_file_authors";

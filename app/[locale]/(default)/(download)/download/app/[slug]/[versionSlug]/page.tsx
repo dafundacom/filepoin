@@ -204,11 +204,10 @@ export default async function SingleDownloadFileAppPage({
                         <div className="flex flex-wrap gap-2">
                           <p>{downloadFile?.version}</p>
                         </div>
-
                         <p>{download?.developer}</p>
                       </div>
                     </div>
-                    <div className={"inline-flex w-full space-x-2 pt-12"}>
+                    <div className="inline-flex w-full space-x-2 pt-12">
                       <DownloadButtonAction
                         downloadLink={downloadFile?.downloadLink}
                         fileSize={downloadFile?.fileSize}

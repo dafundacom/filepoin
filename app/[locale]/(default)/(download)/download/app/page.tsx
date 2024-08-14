@@ -77,7 +77,6 @@ export default async function DownloadAppPage({
               <DownloadSearch />
             </div>
           </div>
-
           <div>
             <div className="mb-2">
               <h2>Pilih Kategori</h2>

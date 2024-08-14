@@ -272,6 +272,8 @@ const EditDownloadForm: React.FunctionComponent<EditDownloadFormProps> = (
       schemaType: download?.schemaType || "",
       type: download?.type,
       status: download?.status || "draft",
+      price: download?.price || "0",
+      currency: download?.currency || "USD",
       downloadTranslationId: download?.downloadTranslationId || "",
     },
   })
@@ -344,7 +346,7 @@ const EditDownloadForm: React.FunctionComponent<EditDownloadFormProps> = (
                   {t("save_as_draft")}
                 </Button>
                 <Button
-                  aria-label={t("publish")}
+                  aria-label={t("update")}
                   type="submit"
                   onClick={() => {
                     form.setValue("status", "published")
@@ -353,7 +355,7 @@ const EditDownloadForm: React.FunctionComponent<EditDownloadFormProps> = (
                   variant="ghost"
                   loading={loading}
                 >
-                  {t("publish")}
+                  {t("update")}
                 </Button>
                 <Button
                   type="button"
