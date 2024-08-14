@@ -1107,8 +1107,8 @@ export const articleRouter = createTRPCRouter({
             .where(eq(articleAuthors.articleId, input))
           await ctx.db
             .delete(articleEditors)
-            .where(eq(articleEditors.articleId, input)),
-            await ctx.db.delete(articles).where(eq(articles.id, input))
+            .where(eq(articleEditors.articleId, input))
+          await ctx.db.delete(articles).where(eq(articles.id, input))
         })
         return data
       } catch (error) {

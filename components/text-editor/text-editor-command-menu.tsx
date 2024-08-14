@@ -466,6 +466,7 @@ const renderItems = () => {
     onUpdate: (props: { editor: TextEditor; clientRect: DOMRect }) => {
       component?.updateProps(props)
 
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       popup &&
         popup[0].setProps({
           getReferenceClientRect: props.clientRect,
