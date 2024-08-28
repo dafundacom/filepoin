@@ -342,7 +342,7 @@ export default async function SigleDownloadAppPage({
               </div>
               <div id="all-version" className="mb-5 space-y-2">
                 <h2 className="text-xl">All version</h2>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                   {download &&
                     download.downloadFiles.length > 0 &&
                     download.downloadFiles.map((downloadFile) => {
