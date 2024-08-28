@@ -1,3 +1,5 @@
+// TODO: translate
+
 import * as React from "react"
 import NextLink from "next/link"
 
@@ -23,8 +25,16 @@ const GlobalNav: React.FC = async () => {
           className="group relative flex size-[92px] flex-1 flex-col items-center justify-center overflow-hidden text-base text-foreground transition-all hover:bg-muted"
           href="/download"
         >
-          <Icon.Download className="mb-2 size-[20px] text-inherit transition-all" />
-          <span className="text-inherit transition-all">{t("download")}</span>
+          <Icon.Apps className="mb-2 size-[20px] text-inherit transition-all" />
+          <span className="text-inherit transition-all">App</span>
+          <span className="absolute inset-x-auto bottom-[-4px] h-1 w-[72px] bg-primary"></span>
+        </NextLink>
+        <NextLink
+          className="group relative flex size-[92px] flex-1 flex-col items-center justify-center overflow-hidden text-base text-foreground transition-all hover:bg-muted"
+          href="/download"
+        >
+          <Icon.Game className="mb-2 size-[20px] text-inherit transition-all" />
+          <span className="text-inherit transition-all">Game</span>
           <span className="absolute inset-x-auto bottom-[-4px] h-1 w-[72px] bg-primary"></span>
         </NextLink>
       </nav>
