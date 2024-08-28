@@ -23,7 +23,7 @@ const GlobalNav: React.FC = async () => {
         </NextLink>
         <NextLink
           className="group relative flex size-[92px] flex-1 flex-col items-center justify-center overflow-hidden text-base text-foreground transition-all hover:bg-muted"
-          href="/download"
+          href="/download/app"
         >
           <Icon.Apps className="mb-2 size-[20px] text-inherit transition-all" />
           <span className="text-inherit transition-all">App</span>
@@ -31,7 +31,7 @@ const GlobalNav: React.FC = async () => {
         </NextLink>
         <NextLink
           className="group relative flex size-[92px] flex-1 flex-col items-center justify-center overflow-hidden text-base text-foreground transition-all hover:bg-muted"
-          href="/download"
+          href="/download/game"
         >
           <Icon.Game className="mb-2 size-[20px] text-inherit transition-all" />
           <span className="text-inherit transition-all">Game</span>
