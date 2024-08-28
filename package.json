@@ -5,10 +5,10 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=true pnpm next build",
     "clean": "git clean -xdf .next node_modules",
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "dev:turbo": "next dev --turbo",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "next lint",
     "lint:fix": "pnpm lint --fix",
     "db:drop": "drizzle-kit drop",
