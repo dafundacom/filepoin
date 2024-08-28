@@ -57,5 +57,5 @@ export default function TRPCReactProvider(props: {
 
 function getBaseUrl() {
   if (typeof window !== "undefined") return window.location.origin
-  return `http://localhost:${process.env.PORT ?? 3000}`
+  return `http://localhost:${process.env.PORT ?? 3001}`
 }
