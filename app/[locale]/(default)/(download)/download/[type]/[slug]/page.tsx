@@ -340,6 +340,28 @@ export default async function SigleDownloadAppPage({
                   />
                 )}
               </div>
+              <h2 className="text-xl">{`Download ${download.title}`}</h2>
+              <div className="my-12 flex flex-col space-y-2 rounded-xl bg-background p-5 shadow">
+                {download &&
+                  download.downloadFiles.length > 0 &&
+                  download.downloadFiles.map((downloadFile) => {
+                    return (
+                      <Button
+                        asChild
+                        aria-label="Download"
+                        key={downloadFile.id}
+                      >
+                        <NextLink
+                          aria-label="Download"
+                          target="_blank"
+                          href={`/download/app/${download.slug}/${downloadFile?.versionSlug}/downloading`}
+                        >
+                          {`Download ${downloadFile.title} (${downloadFile.fileSize})`}
+                        </NextLink>
+                      </Button>
+                    )
+                  })}
+              </div>
               <div id="all-version" className="mb-5 space-y-2">
                 <h2 className="text-xl">All version</h2>
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -370,28 +392,6 @@ export default async function SigleDownloadAppPage({
                       )
                     })}
                 </div>
-              </div>
-              <h2 className="text-xl">{`Download ${download.title}`}</h2>
-              <div className="my-12 flex flex-col space-y-2 rounded-xl bg-background p-5 shadow">
-                {download &&
-                  download.downloadFiles.length > 0 &&
-                  download.downloadFiles.map((downloadFile) => {
-                    return (
-                      <Button
-                        asChild
-                        aria-label="Download"
-                        key={downloadFile.id}
-                      >
-                        <NextLink
-                          aria-label="Download"
-                          target="_blank"
-                          href={`/download/app/${download.slug}/${downloadFile?.versionSlug}/downloading`}
-                        >
-                          {`Download ${downloadFile.title} (${downloadFile.fileSize})`}
-                        </NextLink>
-                      </Button>
-                    )
-                  })}
               </div>
               {/* <React.Suspense> */}
               {/*   <section className="my-5" id="comment"> */}
