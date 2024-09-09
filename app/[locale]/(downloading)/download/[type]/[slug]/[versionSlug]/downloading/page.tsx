@@ -2,10 +2,14 @@
 
 import * as React from "react"
 import type { Metadata } from "next"
+import NextLink from "next/link"
 import { notFound, redirect, RedirectType } from "next/navigation"
 
 import DownloadButtonAction from "@/components/download/download-button-action"
 import Image from "@/components/image"
+import TransformContent from "@/components/transform-content"
+import { Button } from "@/components/ui/button"
+import { Icon } from "@/components/ui/icon"
 import env from "@/env.mjs"
 import { api } from "@/lib/trpc/server"
 import type { DownloadType } from "@/lib/validation/download"
@@ -86,6 +90,13 @@ export default async function SingleDownloadFileAppPage({
     versionSlug: versionSlug,
   })
 
+  const parsedContent = TransformContent({
+    htmlInput: download?.content!,
+    title: download?.title!,
+    maxWords: 100,
+    readMoreLink: `/download/${type}/${slug}`,
+  })
+
   const adsDownloadingPage = await api.ad.byPosition("downloading_page")
 
   const language = download?.language
@@ -120,24 +131,39 @@ export default async function SingleDownloadFileAppPage({
   }
 
   return (
-    <section className="flex w-full max-w-sm flex-col items-center justify-center space-y-4 p-5 lg:max-w-2xl lg:p-0">
-      {adsDownloadingPage &&
-        adsDownloadingPage.length > 0 &&
-        adsDownloadingPage.map((ad) => {
-          return <Ad ad={ad} key={ad.id} />
-        })}
-      <div className="h-full w-[250px] overflow-hidden rounded-xl object-cover lg:w-[500px]">
-        <Image
-          className="!relative"
-          src={download.featuredImage.url}
-          alt={download.title}
-        />
+    <>
+      <div className="absolute left-0 top-0 items-center p-5 align-top">
+        <NextLink href={`/download/${type}/${slug}`}>
+          <Button size="icon" className="mr-1.5 rounded-full" asChild>
+            <Icon.ArrowBack className="size-10 p-2" />
+          </Button>
+          <span className="items-center justify-center text-xl">
+            Back to Post
+          </span>
+        </NextLink>
       </div>
-      <h1 className="text-xl lg:text-4xl">{`Download ${download.title} ${downloadFile.version}`}</h1>
-      <DownloadButtonAction
-        downloadLink={downloadFile.downloadLink}
-        fileSize={downloadFile.fileSize}
-      />
-    </section>
+      <section className="flex w-full max-w-sm flex-col items-center justify-center space-y-4 p-5 lg:max-w-2xl lg:p-0">
+        {adsDownloadingPage &&
+          adsDownloadingPage.length > 0 &&
+          adsDownloadingPage.map((ad) => {
+            return <Ad ad={ad} key={ad.id} />
+          })}
+        <div className="h-full w-[250px] overflow-hidden rounded-xl object-cover lg:w-[500px]">
+          <Image
+            className="!relative"
+            src={download.featuredImage.url}
+            alt={download.title}
+          />
+        </div>
+        <h1 className="text-xl lg:text-4xl">{`Download ${download.title} ${downloadFile.version}`}</h1>
+        <div className="my-4 rounded-xl border border-border bg-background p-5 shadow-lg">
+          {parsedContent}
+        </div>
+        <DownloadButtonAction
+          downloadLink={downloadFile.downloadLink}
+          fileSize={downloadFile.fileSize}
+        />
+      </section>
+    </>
   )
 }

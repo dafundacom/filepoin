@@ -136,6 +136,7 @@ export default async function SigleDownloadAppPage({
   const { firstContent, secondContent } = splitReactNodes(
     React.Children.toArray(parsedContent),
   )
+
   return (
     <>
       <ArticleJsonLd
@@ -244,26 +245,7 @@ export default async function SigleDownloadAppPage({
                   </div>
                 </div>
               </div>
-              <div className="article-content space-y-4">
-                {adsSingleDownloadAbove &&
-                  adsSingleDownloadAbove.length > 0 &&
-                  adsSingleDownloadAbove.map((ad) => {
-                    return <Ad ad={ad} key={ad.id} />
-                  })}
-                {firstContent}
-                {adsSingleDownloadInline &&
-                  adsSingleDownloadInline.length > 0 &&
-                  adsSingleDownloadInline.map((ad) => {
-                    return <Ad ad={ad} key={ad.id} />
-                  })}
-                {secondContent}
-                {adsSingleDownloadBelow &&
-                  adsSingleDownloadBelow.length > 0 &&
-                  adsSingleDownloadBelow.map((ad) => {
-                    return <Ad ad={ad} key={ad.id} />
-                  })}
-              </div>
-              <div className="grid grid-cols-2 grid-rows-2 rounded-lg bg-background shadow dark:bg-muted/80 md:grid-cols-3">
+              <div className="grid grid-cols-2 grid-rows-2 rounded-lg bg-background shadow-md dark:bg-muted/80 md:grid-cols-3">
                 {download?.operatingSystem && (
                   <DownloadDetailBox
                     icon={
@@ -340,31 +322,52 @@ export default async function SigleDownloadAppPage({
                   />
                 )}
               </div>
-              <h2 className="text-xl">{`Download ${download.title}`}</h2>
-              <div className="my-12 flex flex-col space-y-2 rounded-xl bg-background p-5 shadow">
-                {download &&
-                  download.downloadFiles.length > 0 &&
-                  download.downloadFiles.map((downloadFile) => {
-                    return (
-                      <Button
-                        asChild
-                        aria-label="Download"
-                        key={downloadFile.id}
-                      >
-                        <NextLink
-                          aria-label="Download"
-                          target="_blank"
-                          href={`/download/app/${download.slug}/${downloadFile?.versionSlug}/downloading`}
-                        >
-                          {`Download ${downloadFile.title} (${downloadFile.fileSize})`}
-                        </NextLink>
-                      </Button>
-                    )
+              <div className="article-content space-y-4">
+                {adsSingleDownloadAbove &&
+                  adsSingleDownloadAbove.length > 0 &&
+                  adsSingleDownloadAbove.map((ad) => {
+                    return <Ad ad={ad} key={ad.id} />
                   })}
+                {firstContent}
+                {adsSingleDownloadInline &&
+                  adsSingleDownloadInline.length > 0 &&
+                  adsSingleDownloadInline.map((ad) => {
+                    return <Ad ad={ad} key={ad.id} />
+                  })}
+                {secondContent}
+                {adsSingleDownloadBelow &&
+                  adsSingleDownloadBelow.length > 0 &&
+                  adsSingleDownloadBelow.map((ad) => {
+                    return <Ad ad={ad} key={ad.id} />
+                  })}
+              </div>
+              <h2 className="text-xl">{`Download ${download.title}`}</h2>
+              <div className="my-12 flex flex-col">
+                {download && download.downloadFiles.length > 0 && (
+                  <div className="cursor-pointer rounded-lg bg-primary/80 p-4 shadow-lg transition-shadow duration-200 ease-in-out hover:shadow-xl lg:items-center lg:justify-center lg:text-center">
+                    <NextLink
+                      href={`/download/app/${download.slug}/${download.downloadFiles[0]?.versionSlug}/downloading`}
+                      className="text-background"
+                    >
+                      {/* <p className="text-lg font-semibold"> */}
+                      {/*   {download.downloadFiles[0].version} */}
+                      {/* </p> */}
+                      <p className="text-xl font-bold">
+                        {download.downloadFiles[0].title}
+                      </p>
+                      <p className="text-sm">
+                        {download.downloadFiles[0].fileSize}
+                      </p>
+                      <p className="text-xs text-muted/90">
+                        {formatDate(download.downloadFiles[0].createdAt, "LL")}
+                      </p>
+                    </NextLink>
+                  </div>
+                )}
               </div>
               <div id="all-version" className="mb-5 space-y-2">
                 <h2 className="text-xl">All version</h2>
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
                   {download &&
                     download.downloadFiles.length > 0 &&
                     download.downloadFiles.map((downloadFile) => {
@@ -377,9 +380,9 @@ export default async function SigleDownloadAppPage({
                             href={`/download/${type}/${download.slug}/${downloadFile.versionSlug!}`}
                             className="text-background"
                           >
-                            <p className="text-lg font-semibold">
-                              {downloadFile.version}
-                            </p>
+                            {/* <p className="text-lg font-semibold"> */}
+                            {/*   {downloadFile.version} */}
+                            {/* </p> */}
                             <p className="text-xl font-bold">
                               {downloadFile.title}
                             </p>
