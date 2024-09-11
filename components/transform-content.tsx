@@ -22,12 +22,30 @@ interface Node {
 interface TransformContentProps {
   htmlInput: string
   title: string
+  maxWords?: number
+  readMoreLink?: string
+}
+
+const truncateHTMLByWords = (html: string, maxWords: number): string => {
+  const plainText = html.replace(/<\/?[^>]+(>|$)/g, "")
+  const words = plainText.split(/\s+/)
+
+  if (words.length > maxWords) {
+    return words.slice(0, maxWords).join(" ") + "..."
+  }
+
+  return plainText
 }
 
 const TransformContent: React.FunctionComponent<TransformContentProps> = (
   props,
 ) => {
-  const { htmlInput, title } = props
+  const { htmlInput, title, maxWords, readMoreLink } = props
+
+  // Truncate plain text version of the HTML content if maxWords is provided
+  const truncatedHtmlInput = maxWords
+    ? truncateHTMLByWords(htmlInput, maxWords)
+    : htmlInput
 
   const processingInstructions = [
     {
@@ -89,10 +107,22 @@ const TransformContent: React.FunctionComponent<TransformContentProps> = (
       processNode: processNodeDefinitions.processDefaultNode,
     },
   ]
-  return htmlToReactParser.parseWithInstructions(
-    htmlInput,
-    () => true,
-    processingInstructions,
+
+  return (
+    <div>
+      {htmlToReactParser.parseWithInstructions(
+        truncatedHtmlInput,
+        () => true,
+        processingInstructions,
+      )}
+      {maxWords && (
+        <div>
+          <NextLink className="text-primary" href={readMoreLink ?? "#"}>
+            Read More
+          </NextLink>
+        </div>
+      )}
+    </div>
   )
 }
 
