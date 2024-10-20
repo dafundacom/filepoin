@@ -139,7 +139,7 @@ export default function TranslateTopicForm(props: TranslateTopicFormProps) {
         }}
         className="mx-0 space-y-4 lg:mx-8 lg:p-5"
       >
-        <div className="lg:border-1 flex flex-col lg:flex-row lg:space-x-4 lg:border-border">
+        <div className="flex flex-col lg:flex-row lg:space-x-4">
           <div className="w-full lg:w-6/12 lg:space-y-4">
             <FormField
               control={form.control}

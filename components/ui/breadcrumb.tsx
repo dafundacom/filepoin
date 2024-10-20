@@ -107,7 +107,7 @@ export const BreadcrumbEllipsis = (props: React.ComponentProps<"span">) => {
       className={cn("flex h-9 w-9 items-center justify-center", className)}
       {...rest}
     >
-      <Icon.MoreHorizontal className="h-4 w-4" />
+      <Icon.MoreHorizontal className="size-4" />
       <span className="sr-only">More</span>
     </span>
   )

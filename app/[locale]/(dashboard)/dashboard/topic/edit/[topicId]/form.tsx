@@ -176,7 +176,7 @@ export default function EditTopicForm(props: EditTopicFormProps) {
           }}
         >
           <h1 className="pb-2 lg:pb-5">{ts("edit")}</h1>
-          <div className="lg:border-1 flex flex-col lg:flex-row lg:space-x-4 lg:border-border">
+          <div className="flex flex-col lg:flex-row lg:space-x-4">
             <div className="w-full lg:w-6/12 lg:space-y-4">
               <FormField
                 control={form.control}

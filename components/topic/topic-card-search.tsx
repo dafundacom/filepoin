@@ -34,7 +34,7 @@ const TopicCardSearch: React.FC<TopicCardSearchProps> = (props) => {
               alt={title}
             />
           ) : (
-            <Icon.Topic className="h-5 w-5" />
+            <Icon.Topic className="size-5" />
           )}
         </div>
         <div className="ml-2 w-3/4">

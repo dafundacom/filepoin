@@ -166,16 +166,16 @@ const ArticleComment: React.FunctionComponent<ArticleCommentFormProps> = (
         {user ? (
           <form className="mb-5 mt-4" onSubmit={(e) => e.preventDefault()}>
             <div className="flex">
-              <div className="relative h-10 w-10 overflow-hidden rounded-full bg-muted">
+              <div className="relative size-10 overflow-hidden rounded-full bg-muted">
                 {user?.image ? (
                   <Image
                     fill
                     src={user?.image}
                     alt={user?.name!}
-                    className="h-10 w-10 object-cover"
+                    className="size-10 object-cover"
                   />
                 ) : (
-                  <Icon.User className="h-10 w-10" />
+                  <Icon.User className="size-10" />
                 )}
               </div>
               <div className="ml-1 flex w-full flex-1 flex-col items-center">
@@ -201,7 +201,7 @@ const ArticleComment: React.FunctionComponent<ArticleCommentFormProps> = (
                     {...register("content", {
                       required: ts("content_required"),
                     })}
-                    className="mx-2 h-[30px] max-h-[180px] w-full resize-none overflow-hidden border border-b"
+                    className="mx-2 h-[30px] max-h-[180px] w-full resize-none overflow-hidden border-b"
                     placeholder={ts("placeholder")}
                   />
                 </div>
@@ -231,16 +231,16 @@ const ArticleComment: React.FunctionComponent<ArticleCommentFormProps> = (
                   <li className="relative flex flex-col" key={comment.id}>
                     <div className="flex justify-between">
                       <figcaption className="mb-2 flex flex-1 items-start justify-start gap-2 md:gap-4">
-                        <div className="relative h-10 w-10 overflow-hidden rounded-full bg-muted">
+                        <div className="relative size-10 overflow-hidden rounded-full bg-muted">
                           {comment?.author?.image ? (
                             <Image
                               fill
                               src={comment?.author?.image}
                               alt={comment?.author?.name!}
-                              className="h-10 w-10 object-cover"
+                              className="size-10 object-cover"
                             />
                           ) : (
-                            <Icon.User className="h-10 w-10" />
+                            <Icon.User className="size-10" />
                           )}
                         </div>
                         {edited !== comment.id ? (
@@ -258,7 +258,7 @@ const ArticleComment: React.FunctionComponent<ArticleCommentFormProps> = (
                               <Button
                                 onClick={() => setReplied(comment.id!)}
                                 variant="ghost"
-                                className="h-8 w-8 rounded-full p-1 md:h-auto md:w-auto md:px-2 md:py-1"
+                                className="size-8 rounded-full p-1 md:size-auto md:px-2 md:py-1"
                               >
                                 <span className="block md:hidden">
                                   <Icon.Comment />
@@ -315,7 +315,7 @@ const ArticleComment: React.FunctionComponent<ArticleCommentFormProps> = (
                               <Icon.MoreVertical />
                             </Button>
                           </PopoverTrigger>
-                          <PopoverContent className="flex w-[min-content] p-0">
+                          <PopoverContent className="flex w-min p-0">
                             <div className="divide-y divide-muted/50">
                               <div className="flex flex-col py-1 text-sm text-foreground">
                                 <Button
@@ -355,7 +355,7 @@ const ArticleComment: React.FunctionComponent<ArticleCommentFormProps> = (
                       >
                         <div className="flex justify-between">
                           <figcaption className="mb-2 flex flex-1 items-start justify-start gap-2 md:gap-4">
-                            <div className="relative h-4 w-4 overflow-hidden rounded-full bg-muted md:h-8 md:w-8">
+                            <div className="relative size-4 overflow-hidden rounded-full bg-muted md:size-8">
                               {reply?.author?.image ? (
                                 <Image
                                   fill
@@ -364,7 +364,7 @@ const ArticleComment: React.FunctionComponent<ArticleCommentFormProps> = (
                                   className="object-cover"
                                 />
                               ) : (
-                                <Icon.User className="h-6 w-6 md:h-10 md:w-10" />
+                                <Icon.User className="size-6 md:size-10" />
                               )}
                             </div>
                             {edited !== reply.id ? (
@@ -409,7 +409,7 @@ const ArticleComment: React.FunctionComponent<ArticleCommentFormProps> = (
                                   <Icon.MoreVertical />
                                 </Button>
                               </PopoverTrigger>
-                              <PopoverContent className="flex w-[min-content] p-0">
+                              <PopoverContent className="flex w-min p-0">
                                 <div className="divide-y divide-muted/50">
                                   <div className="flex flex-col py-1 text-sm text-foreground">
                                     <DeleteArticleCommentButton

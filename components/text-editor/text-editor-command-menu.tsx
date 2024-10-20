@@ -394,7 +394,7 @@ const TextEditorCommandList = ({
               selectItem(index)
             }}
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-md border bg-background">
+            <div className="flex size-10 items-center justify-center rounded-md border bg-background">
               {item.title === "Continue writing" ? "Loading..." : item.icon}
             </div>
             <div>
@@ -410,7 +410,7 @@ const TextEditorCommandList = ({
         className="flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-foreground hover:bg-background/20"
         onClick={() => setOpen(true)}
       >
-        <div className="flex h-10 w-10 items-center justify-center rounded-md border bg-background">
+        <div className="flex size-10 items-center justify-center rounded-md border bg-background">
           <Icon.Image size={18} />
         </div>
         <div>

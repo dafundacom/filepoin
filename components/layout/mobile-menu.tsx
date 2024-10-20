@@ -29,7 +29,7 @@ const MobileMenu: React.FC<MobileMenuProps> = async (props) => {
           </NextLink>
         </Button>
         <TopicListNav
-          className="jusitfy-start flex flex-col items-start"
+          className="flex flex-col items-start justify-start"
           locale={locale}
         />
       </SheetContent>

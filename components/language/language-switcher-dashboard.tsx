@@ -21,9 +21,9 @@ const LanguageSwitcherDashboard: React.FunctionComponent = () => {
         <PopoverTrigger asChild>
           <Button variant="ghost">
             {locale === "id" ? (
-              <Icon.IndonesiaFlag className="h-5 w-5" />
+              <Icon.IndonesiaFlag className="size-5" />
             ) : (
-              <Icon.USAFlag className="h-5 w-5" />
+              <Icon.USAFlag className="size-5" />
             )}
             <span className="sr-only">Change Language</span>
           </Button>
@@ -33,13 +33,13 @@ const LanguageSwitcherDashboard: React.FunctionComponent = () => {
             aria-label="Switch to Bahasa"
             onClick={() => changeLocale("id")}
           >
-            <Icon.IndonesiaFlag className="h-5 w-5" />
+            <Icon.IndonesiaFlag className="size-5" />
           </button>
           <button
             aria-label="Switch to English"
             onClick={() => changeLocale("en")}
           >
-            <Icon.USAFlag className="h-5 w-5" />
+            <Icon.USAFlag className="size-5" />
           </button>
         </PopoverContent>
       </Popover>

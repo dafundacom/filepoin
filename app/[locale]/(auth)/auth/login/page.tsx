@@ -24,7 +24,7 @@ export default async function Page() {
         className="absolute left-4 top-4 md:left-8 md:top-8"
       >
         <NextLink href="/">
-          <Icon.ChevronLeft className="mr-2 h-4 w-4" />
+          <Icon.ChevronLeft className="mr-2 size-4" />
           {ts("back_to_home")}
         </NextLink>
       </Button>

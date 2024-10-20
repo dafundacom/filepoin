@@ -351,12 +351,12 @@ const EditArticleForm: React.FunctionComponent<EditArticleFormProps> = (
               className={`${
                 isOpenSidebar == false
                   ? "hidden"
-                  : "pt-15 relative z-20 mt-16 flex flex-row overflow-x-auto bg-background py-4 opacity-100"
+                  : "relative z-20 mt-16 flex flex-row overflow-x-auto bg-background py-4 pt-14 opacity-100"
               } `}
             >
               <div className="fixed bottom-[95px] right-0 top-[90px]">
-                <div className="scrollbar-hide h-[calc(100vh-180px)] max-w-[300px] overflow-y-auto rounded border py-4 max-sm:max-w-full lg:w-[400px] lg:max-w-[400px]">
-                  <div className="flex flex-col bg-background px-2 py-2">
+                <div className="h-[calc(100vh-180px)] max-w-[300px] overflow-y-auto rounded border py-4 max-sm:max-w-full lg:w-[400px] lg:max-w-[400px]">
+                  <div className="flex flex-col bg-background p-2">
                     <div className="my-2 flex flex-col space-y-4 px-4">
                       <FormField
                         control={form.control}
@@ -467,7 +467,7 @@ const EditArticleForm: React.FunctionComponent<EditArticleFormProps> = (
                         selectedEditors={selectedEditors}
                         addSelectedEditors={setSelectedEditors}
                       />
-                      <div className="rouded-lg bg-muted p-3 lg:p-5">
+                      <div className="rounded-lg bg-muted p-3 lg:p-5">
                         <div className="flex justify-between">
                           <div className={showMetaData ? "pb-4" : "pb-0"}>
                             <span className="flex align-top text-base font-semibold">

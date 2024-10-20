@@ -91,11 +91,11 @@ const ReplyArticleComment: React.FunctionComponent<ReplyArticleCommentProps> = (
       onSubmit={(e) => e.preventDefault()}
     >
       <div className="flex">
-        <div className="relative h-6 w-6 overflow-hidden rounded-full bg-muted md:h-10 md:w-10">
+        <div className="relative size-6 overflow-hidden rounded-full bg-muted md:size-10">
           {avatar ? (
             <Image fill src={avatar} alt={username!} className="object-cover" />
           ) : (
-            <Icon.User className="h-6 w-6 md:h-10 md:w-10" />
+            <Icon.User className="size-6 md:size-10" />
           )}
         </div>
         <div className="ml-1 flex w-full flex-1 flex-col items-center">
@@ -121,7 +121,7 @@ const ReplyArticleComment: React.FunctionComponent<ReplyArticleCommentProps> = (
               {...register("content", {
                 required: ts("content_required"),
               })}
-              className="mx-2 h-[30px] max-h-[180px] w-full resize-none overflow-hidden border border-b"
+              className="mx-2 h-[30px] max-h-[180px] w-full resize-none overflow-hidden border-b"
               placeholder={ts("placeholder")}
             />
           </div>

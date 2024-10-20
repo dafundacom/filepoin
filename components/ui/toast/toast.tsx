@@ -27,12 +27,10 @@ export const toastVariants = cva(
     variants: {
       variant: {
         default: "bg-background border",
-        success:
-          "group success border-success bg-success text-success-foreground",
-        info: "group info border-info bg-info text-info-foreground",
-        warning:
-          "group warning border-warning bg-warning text-warning-foreground",
-        danger: "group danger border-danger bg-danger text-danger-foreground",
+        success: "group border-success bg-success text-success-foreground",
+        info: "group border-info bg-info text-info-foreground",
+        warning: "group border-warning bg-warning text-warning-foreground",
+        danger: "group border-danger bg-danger text-danger-foreground",
       },
     },
     defaultVariants: {
@@ -91,7 +89,7 @@ export const ToastClose = React.forwardRef<
       toast-close=""
       {...rest}
     >
-      <Icon.Close className="h-4 w-4" />
+      <Icon.Close className="size-4" />
     </ToastPrimitives.Close>
   )
 })

@@ -47,7 +47,7 @@ const UserMenu: React.FunctionComponent<UserMenuProps> = (props) => {
               href={`/user/${user.username}`}
               className={itemClass}
             >
-              <Icon.User className="mr-2 h-5 w-5" />
+              <Icon.User className="mr-2 size-5" />
               &nbsp;{t("profile")}
             </NextLink>
             <NextLink
@@ -55,7 +55,7 @@ const UserMenu: React.FunctionComponent<UserMenuProps> = (props) => {
               href="/setting"
               className={itemClass}
             >
-              <Icon.Setting className="mr-2 h-5 w-5" />
+              <Icon.Setting className="mr-2 size-5" />
               &nbsp;{t("setting")}
             </NextLink>
             {user.role === "admin" && (
@@ -64,7 +64,7 @@ const UserMenu: React.FunctionComponent<UserMenuProps> = (props) => {
                 href="/dashboard"
                 className={itemClass}
               >
-                <Icon.Dashboard className="mr-2 h-5 w-5" />
+                <Icon.Dashboard className="mr-2 size-5" />
                 &nbsp;{t("dashboard")}
               </NextLink>
             )}

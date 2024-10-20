@@ -109,7 +109,7 @@ export const EditUserForm: React.FunctionComponent<EditUserFormProps> = (
       <div className="flex flex-col lg:flex-row">
         <div className="w-full p-2 lg:w-4/12">
           <div className="flex w-full flex-col items-center justify-center lg:flex-row">
-            <div className="w-ful lg:w-3/12">
+            <div className="w-full lg:w-3/12">
               <Image
                 src={user.image!}
                 alt={user.name!}

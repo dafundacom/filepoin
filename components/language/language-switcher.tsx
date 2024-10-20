@@ -22,12 +22,12 @@ const LanguageSwitcher: React.FunctionComponent = () => {
           <Button variant="outline" className="rounded-full">
             {locale === "id" ? (
               <span className="inline-flex flex-row">
-                <Icon.IndonesiaFlag className="mr-2 h-5 w-5" />
-                <span className="h10">Indonesia</span>
+                <Icon.IndonesiaFlag className="mr-2 size-5" />
+                <span className="h-10">Indonesia</span>
               </span>
             ) : (
               <span className="flex flex-row">
-                <Icon.USAFlag className="mr-2 h-10 w-10" />
+                <Icon.USAFlag className="mr-2 size-10" />
                 English
               </span>
             )}
@@ -41,7 +41,7 @@ const LanguageSwitcher: React.FunctionComponent = () => {
             onClick={() => changeLocale("id")}
           >
             <div className="flex flex-row">
-              <Icon.IndonesiaFlag className="mr-2 h-5 w-5" />
+              <Icon.IndonesiaFlag className="mr-2 size-5" />
               Indonesia
             </div>
           </Button>
@@ -52,7 +52,7 @@ const LanguageSwitcher: React.FunctionComponent = () => {
             className="w-full"
           >
             <div className="flex flex-row">
-              <Icon.USAFlag className="mr-2 h-5 w-5" />
+              <Icon.USAFlag className="mr-2 size-5" />
               English
             </div>
           </Button>

@@ -16,7 +16,7 @@ export default async function UserProfilePage() {
   }
 
   return (
-    <main className="fade-up-elemenet min-h-screen pb-10">
+    <main className="fade-up-element min-h-screen pb-10">
       <div className="container mt-4 md:mt-10">
         <section>
           <h2 className="mb-[14px] text-base font-bold md:mb-6 md:text-2xl">

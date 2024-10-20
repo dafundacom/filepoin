@@ -109,7 +109,7 @@ const UploadMedia: React.FunctionComponent<UploadMediaProps> = (props) => {
               )}
             </form>
           </Form>
-          <div className="align-center flex justify-center">
+          <div className="flex justify-center">
             <Button
               type="button"
               onClick={form.handleSubmit(onSubmit)}

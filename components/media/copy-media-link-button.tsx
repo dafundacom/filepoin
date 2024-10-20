@@ -23,7 +23,7 @@ const CopyMediaLinkButton: React.FunctionComponent<CopyMediaLinkButton> = (
     <Button
       aria-label="Copy Media Link"
       size="icon"
-      className="absolute z-20 ml-8 h-[30px] w-[30px] rounded-full"
+      className="absolute z-20 ml-8 size-[30px] rounded-full"
       onClick={(e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault()
         copyToClipboard(url)
