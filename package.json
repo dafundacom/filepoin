@@ -112,7 +112,7 @@
     "sanitize-html": "^2.13.0",
     "server-only": "^0.0.1",
     "sharp": "^0.33.5",
-    "superjson": "^2.2.1",
+    "superjson": "^2.2.2",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "tippy.js": "^6.3.7",
